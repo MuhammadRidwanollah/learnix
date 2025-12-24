@@ -18,16 +18,19 @@ class _SplashScreenState extends State<SplashScreen> {
       // Check if user is logged in (in a real app, you'd check actual auth state)
       bool isLoggedIn = _checkLoginStatus(); // Fungsi untuk mengecek status login
       
-      if (isLoggedIn) {
-        // Navigate to main app if logged in
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const MyAppShell()),
-        );
-      } else {
-        // Navigate to login page if not logged in
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-        );
+      // Using mounted to avoid the async context warning
+      if (mounted) {
+        if (isLoggedIn) {
+          // Navigate to main app if logged in
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const MyAppShell()),
+          );
+        } else {
+          // Navigate to login page if not logged in
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        }
       }
     });
   }

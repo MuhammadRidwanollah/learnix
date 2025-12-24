@@ -108,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Icons.language,
                     locale.language,
                     () {
-                      _showLanguageDialog(context, languageProvider, locale);
+                      _showLanguageDialog(context, languageProvider);
                     },
                   ),
                   const SizedBox(height: 12),
@@ -188,42 +188,111 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showLanguageDialog(
     BuildContext context,
     LanguageProvider languageProvider,
-    AppLocalizations locale,
   ) {
+    String selectedLanguage = languageProvider.languageCode;
+
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(locale.language),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RadioListTile<String>(
-                title: const Text('English'),
-                value: 'en',
-                groupValue: languageProvider.languageCode,
-                onChanged: (value) {
-                  if (value != null) {
-                    languageProvider.changeLanguage(const Locale('en', 'US'));
-                    Navigator.of(context).pop();
-                  }
-                },
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(AppLocalizations.of(context).language),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Using custom radio buttons to avoid deprecated properties
+                    _buildDialogLanguageOption(
+                      title: 'English',
+                      value: 'en',
+                      currentValue: selectedLanguage,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLanguage = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    _buildDialogLanguageOption(
+                      title: 'Bahasa Indonesia',
+                      value: 'id',
+                      currentValue: selectedLanguage,
+                      onChanged: (value) {
+                        setState(() {
+                          selectedLanguage = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-              RadioListTile<String>(
-                title: const Text('Bahasa Indonesia'),
-                value: 'id',
-                groupValue: languageProvider.languageCode,
-                onChanged: (value) {
-                  if (value != null) {
-                    languageProvider.changeLanguage(const Locale('id', 'ID'));
+              actions: [
+                TextButton(
+                  onPressed: () {
                     Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ],
-          ),
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    // Change language
+                    if (selectedLanguage == 'en') {
+                      languageProvider.changeLanguage(const Locale('en', 'US'));
+                    } else {
+                      languageProvider.changeLanguage(const Locale('id', 'ID'));
+                    }
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
         );
       },
+    );
+  }
+
+  Widget _buildDialogLanguageOption({
+    required String title,
+    required String value,
+    required String currentValue,
+    required Function(String?) onChanged,
+  }) {
+    final bool isSelected = currentValue == value;
+    
+    return GestureDetector(
+      onTap: () => onChanged(value),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          children: [
+            Container(
+              width: 20,
+              height: 20,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? const Color(0xFFB23A3A) : Colors.grey,
+                  width: 2,
+                ),
+                color: isSelected ? const Color(0xFFB23A3A) : Colors.transparent,
+              ),
+              child: isSelected
+                  ? const Icon(
+                      Icons.check,
+                      size: 14,
+                      color: Colors.white,
+                    )
+                  : null,
+            ),
+            const SizedBox(width: 12),
+            Text(title),
+          ],
+        ),
+      ),
     );
   }
 }

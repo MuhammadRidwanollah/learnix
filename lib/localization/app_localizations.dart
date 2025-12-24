@@ -108,7 +108,7 @@ class AppLocalizations {
     }
   }
 
-  late Locale _locale;
+  final Locale _locale;
 
   AppLocalizations(this._locale);
 }
