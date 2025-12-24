@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/splash': (context) => const SplashScreen(),
       },
-      home: const MyAppShell(), // This will be the main app shell
+      // Hapus home karena kita menggunakan initialRoute
     );
   }
 }
