@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart';
 import 'main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
       // Check if user is logged in (in a real app, you'd check actual auth state)
-      bool isLoggedIn = false; // Set to false to show login page first
+      bool isLoggedIn = _checkLoginStatus(); // Fungsi untuk mengecek status login
       
       if (isLoggedIn) {
         // Navigate to main app if logged in
@@ -28,6 +29,12 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       }
     });
+  }
+
+  bool _checkLoginStatus() {
+    // In a real app, you would check actual auth state here
+    // For now, returning false to show login page
+    return false;
   }
 
   @override
