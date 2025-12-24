@@ -76,8 +76,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
 
             const SizedBox(height: 10),
 
-            // Using Container with fixed height to prevent overflow
-            Container(
+            // Using SizedBox with fixed height to prevent overflow
+            SizedBox(
               height: 400, // Fixed height to prevent overflow
               child: ListView.builder(
                 shrinkWrap: true,
@@ -141,6 +141,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 },
               ),
             ),
+            
+            const SizedBox(height: 16), // Mengganti Container dengan SizedBox
           ],
         ),
       ),

@@ -43,7 +43,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
 
             // Assignment List
             // Using Container with fixed height to prevent overflow
-            Container(
+            SizedBox(
               height: 400, // Fixed height to prevent overflow
               child: ListView.builder(
                 shrinkWrap: true,
@@ -104,6 +104,8 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                 },
               ),
             ),
+            
+            const SizedBox(height: 16), // Mengganti Container dengan SizedBox
           ],
         ),
       ),

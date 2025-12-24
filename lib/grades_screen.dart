@@ -101,8 +101,8 @@ class _GradesScreenState extends State<GradesScreen> {
 
             const SizedBox(height: 10),
 
-            // Using Container with fixed height to prevent overflow
-            Container(
+            // Using SizedBox with fixed height to prevent overflow
+            SizedBox(
               height: 350, // Fixed height to prevent overflow
               child: ListView.builder(
                 shrinkWrap: true,
@@ -180,6 +180,8 @@ class _GradesScreenState extends State<GradesScreen> {
                 },
               ),
             ),
+            
+            const SizedBox(height: 16), // Mengganti Container dengan SizedBox
           ],
         ),
       ),

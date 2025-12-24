@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // Using ListView with shrinkWrap and NeverScrollablePhysics to avoid overflow
             // This prevents the nested scrolling issue
-            Container(
+            SizedBox(
               height: 300, // Fixed height to prevent overflow
               child: ListView.builder(
                 shrinkWrap: true,
@@ -221,6 +221,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+            
+            const SizedBox(height: 16), // Mengganti Container dengan SizedBox
           ],
         ),
       ),

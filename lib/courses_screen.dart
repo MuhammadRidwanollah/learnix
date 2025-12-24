@@ -109,8 +109,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
 
             const SizedBox(height: 10),
 
-            // Using Container with fixed height to prevent overflow
-            Container(
+            // Using SizedBox with fixed height to prevent overflow
+            SizedBox(
               height: 300, // Fixed height to prevent overflow
               child: ListView.builder(
                 shrinkWrap: true,
@@ -214,6 +214,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 ],
               ),
             ),
+            
+            const SizedBox(height: 16), // Mengganti Container dengan SizedBox
           ],
         ),
       ),
