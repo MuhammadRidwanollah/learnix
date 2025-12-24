@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'localization/app_localizations.dart';
+import 'localization/language_provider.dart';
 import 'splash_screen.dart';
 import 'login_page.dart';
 import 'register_page.dart';
@@ -6,9 +9,15 @@ import 'home_screen.dart';
 import 'tab_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LanguageProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,19 +25,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Learnix',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        fontFamily: 'Roboto',
-      ),
-      initialRoute: '/splash', // Mulai dari splash screen
-      routes: {
-        '/': (context) => const MyAppShell(),
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/splash': (context) => const SplashScreen(),
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Learnix',
+          theme: ThemeData(
+            primarySwatch: Colors.red,
+            fontFamily: 'Roboto',
+          ),
+          locale: languageProvider.selectedLocale,
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('id', 'ID'),
+          ],
+          localizationsDelegates: const [
+            AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          initialRoute: '/splash', // Mulai dari splash screen
+          routes: {
+            '/': (context) => const MyAppShell(),
+            '/login': (context) => const LoginPage(),
+            '/register': (context) => const RegisterPage(),
+            '/splash': (context) => const SplashScreen(),
+          },
+        );
       },
     );
   }
@@ -59,26 +83,28 @@ class _MyAppShellState extends State<MyAppShell> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: const Icon(Icons.home),
+            label: locale.home,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Learning',
+            icon: const Icon(Icons.school),
+            label: locale.learning,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            icon: const Icon(Icons.notifications),
+            label: locale.notifications,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: const Icon(Icons.person),
+            label: locale.profile,
           ),
         ],
         currentIndex: _selectedIndex,

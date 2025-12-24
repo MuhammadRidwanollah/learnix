@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'localization/app_localizations.dart';
+import 'localization/language_provider.dart';
 import 'profile_detail_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,14 +14,17 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Profile',
-          style: TextStyle(
+        title: Text(
+          locale.profile,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -30,7 +36,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             // Profile Header
             Container(
-              width: double.infinity,
               padding: const EdgeInsets.all(24.0),
               decoration: const BoxDecoration(
                 color: Color(0xFFB23A3A),
@@ -44,17 +49,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const CircleAvatar(
                     radius: 50,
                     backgroundColor: Colors.white,
-                    child: Icon(
-                      Icons.person,
-                      size: 50,
-                      color: Color(0xFFB23A3A),
+                    child: CircleAvatar(
+                      radius: 48,
+                      backgroundImage: AssetImage('assets/images/profile.jpg'),
+                      child: Icon(
+                        Icons.person,
+                        size: 50,
+                        color: Color(0xFFB23A3A),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   const Text(
                     'John Doe',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -73,82 +82,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 20),
 
-            // Profile Stats
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildStatCard('Courses', '8', Icons.book_outlined),
-                  _buildStatCard('Completed', '3', Icons.check_circle_outline),
-                  _buildStatCard('Hours', '42', Icons.access_time),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
             // Profile Options
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Card(
-                elevation: 2,
-                child: Column(
-                  children: [
-                    _buildProfileOption(
-                      icon: Icons.person,
-                      title: 'Personal Information',
-                    ),
-                    const Divider(height: 1),
-                    _buildProfileOption(
-                      icon: Icons.lock,
-                      title: 'Change Password',
-                    ),
-                    const Divider(height: 1),
-                    _buildProfileOption(
-                      icon: Icons.notifications,
-                      title: 'Notifications',
-                    ),
-                    const Divider(height: 1),
-                    _buildProfileOption(
-                      icon: Icons.help,
-                      title: 'Help & Support',
-                    ),
-                    const Divider(height: 1),
-                    _buildProfileOption(
-                      icon: Icons.settings,
-                      title: 'Settings',
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Logout Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+              child: Column(
+                children: [
+                  _buildProfileOption(
+                    context,
+                    Icons.person,
+                    locale.profile,
+                    () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const ProfileDetailScreen(
+                            name: 'John Doe',
+                            email: 'john.doe@example.com',
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  child: const Text(
-                    'Logout',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  const SizedBox(height: 12),
+                  _buildProfileOption(
+                    context,
+                    Icons.language,
+                    locale.language,
+                    () {
+                      _showLanguageDialog(context, languageProvider, locale);
+                    },
                   ),
-                ),
+                  const SizedBox(height: 12),
+                  _buildProfileOption(
+                    context,
+                    Icons.settings,
+                    locale.settings,
+                    () {},
+                  ),
+                  const SizedBox(height: 12),
+                  _buildProfileOption(
+                    context,
+                    Icons.logout,
+                    locale.logout,
+                    () {
+                      // Navigate back to login screen
+                      Navigator.of(context).pushReplacementNamed('/login');
+                    },
+                  ),
+                ],
               ),
             ),
 
@@ -159,10 +139,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStatCard(String title, String value, IconData icon) {
+  Widget _buildProfileOption(
+    BuildContext context,
+    IconData icon,
+    String title,
+    VoidCallback onTap,
+  ) {
     return Container(
-      width: 100,
-      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -175,69 +158,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      child: Column(
-        children: [
-          Icon(icon, color: const Color(0xFFB23A3A), size: 24),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
+      child: ListTile(
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(10),
           ),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
-            ),
+          child: Icon(
+            icon,
+            color: const Color(0xFFB23A3A),
           ),
-        ],
+        ),
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w500),
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.grey,
+        ),
+        onTap: onTap,
       ),
     );
   }
 
-  Widget _buildProfileOption({
-    required IconData icon,
-    required String title,
-  }) {
-    return ListTile(
-      leading: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Icon(
-          icon,
-          color: const Color(0xFFB23A3A),
-        ),
-      ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-      trailing: const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Colors.grey,
-      ),
-      onTap: () {
-        if (title == 'Personal Information') {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ProfileDetailScreen(
-                name: 'John Doe',
-                email: 'john.doe@example.com',
+  void _showLanguageDialog(
+    BuildContext context,
+    LanguageProvider languageProvider,
+    AppLocalizations locale,
+  ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(locale.language),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              RadioListTile<String>(
+                title: const Text('English'),
+                value: 'en',
+                groupValue: languageProvider.languageCode,
+                onChanged: (value) {
+                  if (value != null) {
+                    languageProvider.changeLanguage(const Locale('en', 'US'));
+                    Navigator.of(context).pop();
+                  }
+                },
               ),
-            ),
-          );
-        }
+              RadioListTile<String>(
+                title: const Text('Bahasa Indonesia'),
+                value: 'id',
+                groupValue: languageProvider.languageCode,
+                onChanged: (value) {
+                  if (value != null) {
+                    languageProvider.changeLanguage(const Locale('id', 'ID'));
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          ),
+        );
       },
     );
   }

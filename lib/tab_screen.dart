@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'courses_screen.dart';
 import 'assignments_screen.dart';
 import 'grades_screen.dart';
@@ -28,14 +29,16 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Learning Hub',
-          style: TextStyle(
+        title: Text(
+          locale.learning,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -46,11 +49,11 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
           labelColor: const Color(0xFFB23A3A),
           unselectedLabelColor: Colors.grey,
           indicatorColor: const Color(0xFFB23A3A),
-          tabs: const [
-            Tab(text: 'Courses'),
-            Tab(text: 'Assignments'),
-            Tab(text: 'Grades'),
-            Tab(text: 'Resources'),
+          tabs: [
+            Tab(text: locale.myCourses),
+            Tab(text: locale.assignments),
+            Tab(text: locale.grades),
+            Tab(text: locale.resources),
           ],
         ),
       ),

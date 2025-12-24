@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -77,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   const Center(
                     child: Text(
-                      'Welcome Back',
+                      'Learnix',
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -85,10 +88,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Center(
+                  Center(
                     child: Text(
-                      'Sign in to continue',
-                      style: TextStyle(
+                      locale.signInToContinue,
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
                       ),
@@ -101,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: locale.email,
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.email,
@@ -117,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: locale.password,
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.lock,
@@ -145,9 +148,9 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {},
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Color(0xFFB23A3A)),
+                      child: Text(
+                        locale.forgotPassword,
+                        style: const TextStyle(color: Color(0xFFB23A3A)),
                       ),
                     ),
                   ),
@@ -169,9 +172,9 @@ class _LoginPageState extends State<LoginPage> {
                         // For now, just bypass auth and go to main app
                         Navigator.of(context).pushReplacementNamed('/'); // This would navigate to main app
                       },
-                      child: const Text(
-                        'Sign In',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      child: Text(
+                        locale.signIn,
+                        style: const TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   ),
@@ -202,9 +205,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         );
                       },
-                      child: const Text(
-                        'Create a new account',
-                        style: TextStyle(color: Color(0xFFB23A3A)),
+                      child: Text(
+                        locale.createNewAccount,
+                        style: const TextStyle(color: Color(0xFFB23A3A)),
                       ),
                     ),
                   ),

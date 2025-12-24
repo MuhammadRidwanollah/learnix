@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'notification_detail_screen.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -11,14 +12,16 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Notifications',
-          style: TextStyle(
+        title: Text(
+          locale.notifications,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -46,10 +49,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   color: Color(0xFFB23A3A),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Notification Settings',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),

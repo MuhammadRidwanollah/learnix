@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,14 +11,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Learnix',
-          style: TextStyle(
+        title: Text(
+          locale.title,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Color(0xFFB23A3A),
@@ -54,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Welcome Back!',
-                    style: TextStyle(
+                  Text(
+                    locale.welcomeBack,
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -103,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildStatCard('Courses', '8', Icons.book_outlined),
+                  _buildStatCard(locale.myCourses, '8', Icons.book_outlined),
                   _buildStatCard('Completed', '3', Icons.check_circle_outline),
                   _buildStatCard('Pending', '5', Icons.access_time),
                 ],
@@ -118,18 +121,18 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Continue Learning',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       'View All',
-                      style: TextStyle(color: Color(0xFFB23A3A)),
+                      style: const TextStyle(color: Color(0xFFB23A3A)),
                     ),
                   ),
                 ],
@@ -158,9 +161,9 @@ class _HomeScreenState extends State<HomeScreen> {
             // Popular Courses Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: const Text(
+              child: Text(
                 'Popular Courses',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

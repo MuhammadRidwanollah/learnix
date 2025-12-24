@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'login_page.dart';
 import 'main.dart';
 
@@ -39,26 +40,28 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFB23A3A),
       body: SafeArea(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: const Column(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Learnix',
-                style: TextStyle(
+                locale.title,
+                style: const TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 16),
-              Text(
+              const SizedBox(height: 16),
+              const Text(
                 'Learning Management System',
                 style: TextStyle(
                   fontSize: 16,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -17,6 +18,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -77,10 +80,10 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
-                      'Create Account',
-                      style: TextStyle(
+                      locale.createAccount,
+                      style: const TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
                       ),
@@ -93,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextField(
                     controller: _nameController,
                     decoration: InputDecoration(
-                      labelText: 'Full Name',
+                      labelText: locale.fullName,
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.person,
@@ -108,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: 'Email',
+                      labelText: locale.email,
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.email,
@@ -124,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _passwordController,
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: locale.password,
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.lock,
@@ -152,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     controller: _confirmPasswordController,
                     obscureText: _obscureConfirmPassword,
                     decoration: InputDecoration(
-                      labelText: 'Confirm Password',
+                      labelText: locale.confirmPassword,
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.lock,
@@ -190,9 +193,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         // Validate and register
                         _register();
                       },
-                      child: const Text(
-                        'Create Account',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      child: Text(
+                        locale.createAccount,
+                        style: const TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   ),
@@ -205,9 +208,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Text(
-                        'Already have an account? Sign In',
-                        style: TextStyle(color: Color(0xFFB23A3A)),
+                      child: Text(
+                        locale.alreadyHaveAccount,
+                        style: const TextStyle(color: Color(0xFFB23A3A)),
                       ),
                     ),
                   ),
