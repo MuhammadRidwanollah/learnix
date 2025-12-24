@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // Import main app
+import 'main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,10 +13,20 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () {
-      // Since we're bypassing auth, go directly to main app
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const MyAppShell()),
-      );
+      // Check if user is logged in (in a real app, you'd check actual auth state)
+      bool isLoggedIn = false; // Set to false to show login page first
+      
+      if (isLoggedIn) {
+        // Navigate to main app if logged in
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const MyAppShell()),
+        );
+      } else {
+        // Navigate to login page if not logged in
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
     });
   }
 

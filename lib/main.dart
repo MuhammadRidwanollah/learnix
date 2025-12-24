@@ -23,14 +23,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         fontFamily: 'Roboto',
       ),
-      initialRoute: '/', // Start with the main app
+      initialRoute: '/splash', // Mulai dari splash screen
       routes: {
         '/': (context) => const MyAppShell(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/splash': (context) => const SplashScreen(),
       },
-      // Hapus home karena kita menggunakan initialRoute
     );
   }
 }
@@ -60,7 +59,6 @@ class _MyAppShellState extends State<MyAppShell> {
 
   @override
   Widget build(BuildContext context) {
-    // Since we're bypassing auth, we always show the main app
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
