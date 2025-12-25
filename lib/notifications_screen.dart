@@ -14,6 +14,74 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
+    // Data palsu untuk notifikasi
+    final List<Map<String, dynamic>> notifications = [
+      {
+        'title': locale.newCourseAvailable,
+        'subtitle': locale.checkOutNewFlutterCourse,
+        'time': locale.oneMinAgo,
+        'isUnread': true,
+        'icon': Icons.school,
+        'type': locale.course,
+      },
+      {
+        'title': locale.assignmentDueSoon,
+        'subtitle': locale.assignmentDueTomorrow,
+        'time': locale.fiveMinAgo,
+        'isUnread': true,
+        'icon': Icons.assignment,
+        'type': locale.assignment,
+      },
+      {
+        'title': locale.upcomingEvent,
+        'subtitle': locale.webinarOnMobileDevelopment,
+        'time': locale.tenMinAgo,
+        'isUnread': true,
+        'icon': Icons.event,
+        'type': locale.event,
+      },
+      {
+        'title': locale.courseUpdate,
+        'subtitle': locale.newMaterialsAdded,
+        'time': locale.twentyMinAgo,
+        'isUnread': false,
+        'icon': Icons.book,
+        'type': locale.course,
+      },
+      {
+        'title': locale.newNotification,
+        'subtitle': locale.youHaveNewNotification,
+        'time': locale.thirtyMinAgo,
+        'isUnread': false,
+        'icon': Icons.notifications,
+        'type': locale.notifications,
+      },
+      {
+        'title': locale.assignmentDueSoon,
+        'subtitle': locale.assignmentDueInTwoDays,
+        'time': locale.oneHourAgo,
+        'isUnread': false,
+        'icon': Icons.assignment,
+        'type': locale.assignment,
+      },
+      {
+        'title': locale.newCourseAvailable,
+        'subtitle': locale.checkOutNewWebDevelopmentCourse,
+        'time': locale.twoHoursAgo,
+        'isUnread': false,
+        'icon': Icons.code,
+        'type': locale.course,
+      },
+      {
+        'title': locale.gradePosted,
+        'subtitle': locale.yourGradeForAssignment,
+        'time': locale.yesterday,
+        'isUnread': false,
+        'icon': Icons.grade,
+        'type': locale.grade,
+      },
+    ];
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -74,9 +142,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16.0),
-              itemCount: 8,
+              itemCount: notifications.length,
               itemBuilder: (context, index) {
-                bool isUnread = index < 3; // First 3 notifications are unread
+                final notification = notifications[index];
+                bool isUnread = (notification['isUnread'] != null) ? notification['isUnread'] as bool : false;
                 return Container(
                   margin: const EdgeInsets.only(bottom: 8),
                   decoration: BoxDecoration(
@@ -102,18 +171,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
-                        _getNotificationIcon(index),
+                        (notification['icon'] != null && notification['icon'] is IconData) ? notification['icon'] as IconData : Icons.notifications,
                         color: isUnread ? const Color(0xFFB23A3A) : Colors.grey,
                       ),
                     ),
                     title: Text(
-                      _getNotificationTitle(index),
+                      (notification['title'] != null) ? notification['title'].toString() : locale.newNotification,
                       style: TextStyle(
                         fontWeight: isUnread ? FontWeight.bold : FontWeight.normal,
                       ),
                     ),
                     subtitle: Text(
-                      _getNotificationSubtitle(index),
+                      (notification['subtitle'] != null) ? notification['subtitle'].toString() : locale.youHaveNewNotification,
                       style: const TextStyle(
                         color: Colors.grey,
                       ),
@@ -122,7 +191,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                          _getNotificationTime(index),
+                          (notification['time'] != null) ? notification['time'].toString() : locale.justNow,
                           style: const TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
@@ -143,10 +212,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => NotificationDetailScreen(
-                            title: locale.notificationTitle,
-                            message: locale.notificationMessage,
-                            type: locale.course,
-                            time: locale.twoMinAgo,
+                            title: (notification['title'] != null) ? notification['title'].toString() : locale.newNotification,
+                            message: (notification['subtitle'] != null) ? notification['subtitle'].toString() : locale.youHaveNewNotification,
+                            time: (notification['time'] != null) ? notification['time'].toString() : locale.justNow,
+                            type: (notification['type'] != null) ? notification['type'].toString() : locale.notifications,
                           ),
                         ),
                       );
@@ -159,62 +228,5 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         ],
       ),
     );
-  }
-
-  IconData _getNotificationIcon(int index) {
-    final locale = AppLocalizations.of(context);
-    switch (index % 4) {
-      case 0:
-        return Icons.school;
-      case 1:
-        return Icons.assignment;
-      case 2:
-        return Icons.event;
-      default:
-        return Icons.notifications;
-    }
-  }
-
-  String _getNotificationTitle(int index) {
-    final locale = AppLocalizations.of(context);
-    switch (index % 4) {
-      case 0:
-        return locale.newCourseAvailable;
-      case 1:
-        return locale.assignmentDueSoon;
-      case 2:
-        return locale.upcomingEvent;
-      default:
-        return locale.newNotification;
-    }
-  }
-
-  String _getNotificationSubtitle(int index) {
-    final locale = AppLocalizations.of(context);
-    switch (index % 4) {
-      case 0:
-        return locale.checkOutNewFlutterCourse;
-      case 1:
-        return locale.assignmentDueInTwoDays;
-      case 2:
-        return locale.webinarOnMobileDevelopment;
-      default:
-        return locale.youHaveNewNotification;
-    }
-  }
-
-  String _getNotificationTime(int index) {
-    final locale = AppLocalizations.of(context);
-    List<String> times = [
-      locale.oneMinAgo,
-      locale.twoMinAgo,
-      locale.fiveMinAgo,
-      locale.tenMinAgo,
-      locale.fifteenMinAgo,
-      locale.twentyMinAgo,
-      locale.thirtyMinAgo,
-      locale.oneHourAgo,
-    ];
-    return times[index % times.length];
   }
 }

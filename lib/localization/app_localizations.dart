@@ -100,6 +100,10 @@ class AppLocalizations {
     return _localizedValues['dueDate'] ?? '';
   }
 
+  String get event {
+    return _localizedValues['event'] ?? '';
+  }
+
   String get status {
     return _localizedValues['status'] ?? '';
   }
@@ -222,6 +226,38 @@ class AppLocalizations {
 
   String get courseInstructorPlaceholder {
     return _localizedValues['courseInstructorPlaceholder'] ?? '';
+  }
+
+  String get flutterDevelopment {
+    return _localizedValues['flutterDevelopment'] ?? '';
+  }
+
+  String get webDevelopment {
+    return _localizedValues['webDevelopment'] ?? '';
+  }
+
+  String get uiUxDesign {
+    return _localizedValues['uiUxDesign'] ?? '';
+  }
+
+  String get dataScience {
+    return _localizedValues['dataScience'] ?? '';
+  }
+
+  String get machineLearning {
+    return _localizedValues['machineLearning'] ?? '';
+  }
+
+  String get advancedFlutter {
+    return _localizedValues['advancedFlutter'] ?? '';
+  }
+
+  String get webSecurity {
+    return _localizedValues['webSecurity'] ?? '';
+  }
+
+  String get cloudComputing {
+    return _localizedValues['cloudComputing'] ?? '';
   }
 
   String get courseDescriptionPlaceholder {
@@ -700,6 +736,26 @@ class AppLocalizations {
     return _localizedValues['seeAll'] ?? '';
   }
 
+  String get checkOutNewWebDevelopmentCourse {
+    return _localizedValues['checkOutNewWebDevelopmentCourse'] ?? '';
+  }
+
+  String get yourGradeForAssignment {
+    return _localizedValues['yourGradeForAssignment'] ?? '';
+  }
+
+  String get twoHoursAgo {
+    return _localizedValues['twoHoursAgo'] ?? '';
+  }
+
+  String get yesterday {
+    return _localizedValues['yesterday'] ?? '';
+  }
+
+  String get justNow {
+    return _localizedValues['justNow'] ?? '';
+  }
+
   String get documents {
     return _localizedValues['documents'] ?? '';
   }
@@ -1148,6 +1204,7 @@ class AppLocalizations {
         'courseSpreadsheets': 'Lembar Kerja Kursus',
         'courseArchives': 'Arsip Kursus',
         'courseOther': 'Lainnya',
+                'event': 'Acara',
         'ofOverallGrade': 'dari Nilai Keseluruhan',
         'markAsRead': 'Tandai Sudah Dibaca',
         'takeAction': 'Ambil Tindakan',
@@ -1166,6 +1223,14 @@ class AppLocalizations {
         'newMaterialsAdded': 'Materi baru ditambahkan ke CS101',
         'gradePosted': 'Nilai Diposting',
         'midtermGradeAvailable': 'Nilai ujian tengah semester Anda tersedia',
+        'flutterDevelopment': 'Pengembangan Flutter',
+        'webDevelopment': 'Pengembangan Web',
+        'uiUxDesign': 'Desain UI/UX',
+        'dataScience': 'Ilmu Data',
+        'machineLearning': 'Pembelajaran Mesin',
+        'advancedFlutter': 'Flutter Lanjutan',
+        'webSecurity': 'Keamanan Web',
+        'cloudComputing': 'Komputasi Awan',
         'oneMinAgo': '1 menit yang lalu',
         'twoMinAgo': '2 menit yang lalu',
         'fiveMinAgo': '5 menit yang lalu',
@@ -1178,6 +1243,10 @@ class AppLocalizations {
         'threeHoursAgo': '3 jam yang lalu',
         'oneDayAgo': '1 hari yang lalu',
         'twoDaysAgo': '2 hari yang lalu',
+        'yesterday': 'Kemarin',
+        'justNow': 'Baru saja',
+        'checkOutNewWebDevelopmentCourse': 'Lihat kursus Pengembangan Web baru kami',
+        'yourGradeForAssignment': 'Nilai Anda untuk tugas',
         'pdfDocument': 'Dokumen PDF',
         'fileSize24MB': '2.4 MB',
         'uploadDatePlaceholder': '2023-10-15',
@@ -1200,6 +1269,7 @@ class AppLocalizations {
         'previous': 'Sebelumnya',
         'markComplete': 'Tandai Selesai',
         'next': 'Berikutnya',
+        'seeAll': 'Lihat Semua',
       };
     } else {
       // Default to English
@@ -1365,6 +1435,7 @@ class AppLocalizations {
         'courseSpreadsheets': 'Course Spreadsheets',
         'courseArchives': 'Course Archives',
         'courseOther': 'Other',
+                'event': 'Event',
         'ofOverallGrade': 'of Overall Grade',
         'markAsRead': 'Mark as Read',
         'takeAction': 'Take Action',
@@ -1383,6 +1454,14 @@ class AppLocalizations {
         'newMaterialsAdded': 'New materials added to CS101',
         'gradePosted': 'Grade Posted',
         'midtermGradeAvailable': 'Your midterm grade is available',
+        'flutterDevelopment': 'Flutter Development',
+        'webDevelopment': 'Web Development',
+        'uiUxDesign': 'UI/UX Design',
+        'dataScience': 'Data Science',
+        'machineLearning': 'Machine Learning',
+        'advancedFlutter': 'Advanced Flutter',
+        'webSecurity': 'Web Security',
+        'cloudComputing': 'Cloud Computing',
         'oneMinAgo': '1 min ago',
         'twoMinAgo': '2 min ago',
         'fiveMinAgo': '5 min ago',
@@ -1395,6 +1474,10 @@ class AppLocalizations {
         'threeHoursAgo': '3 hours ago',
         'oneDayAgo': '1 day ago',
         'twoDaysAgo': '2 days ago',
+        'yesterday': 'Yesterday',
+        'justNow': 'Just now',
+        'checkOutNewWebDevelopmentCourse': 'Check out our new Web Development course',
+        'yourGradeForAssignment': 'Your grade for the assignment',
         'pdfDocument': 'PDF Document',
         'fileSize24MB': '2.4 MB',
         'uploadDatePlaceholder': '2023-10-15',
@@ -1417,6 +1500,7 @@ class AppLocalizations {
         'previous': 'Previous',
         'markComplete': 'Mark Complete',
         'next': 'Next',
+        'seeAll': 'See All',
       };
     }
   }

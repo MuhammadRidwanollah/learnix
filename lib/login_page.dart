@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
+import 'providers/user_provider.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -169,8 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       onPressed: () {
-                        // For now, just bypass auth and go to main app
-                        Navigator.of(context).pushReplacementNamed('/'); // This would navigate to main app
+                        _login(context);
                       },
                       child: Text(
                         locale.signIn,
@@ -234,6 +235,47 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _login(BuildContext context) {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text;
+    
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourEmail)),
+      );
+      return;
+    }
+    
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).passwordMustBeAtLeast6Characters)),
+      );
+      return;
+    }
+    
+    // For now, simulate successful login
+    // Extract name from email (before @ symbol) or use email as name
+    String name = email.split('@')[0];
+    name = name.split('.').map((part) => part[0].toUpperCase() + part.substring(1)).join(' ');
+    
+    // Create user and store in provider
+    User user = User(
+      name: name,
+      email: email,
+      studentId: 'S${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}${email.hashCode.abs().toString().substring(0, 4)}',
+      program: 'Computer Science',
+      year: 'Year 3',
+      completedCourses: 8,
+      enrolledCourses: 3,
+      gpa: 3.7,
+    );
+    
+    Provider.of<UserProvider>(context, listen: false).setUser(user);
+    
+    // Navigate to main app
+    Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override

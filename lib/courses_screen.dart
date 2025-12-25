@@ -14,6 +14,77 @@ class _CoursesScreenState extends State<CoursesScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
+    // Data palsu untuk kursus-kursus
+    final List<Map<String, dynamic>> myCourses = [
+      {
+        'title': locale.flutterDevelopment,
+        'instructor': 'Dr. Anderson',
+        'icon': Icons.code,
+      },
+      {
+        'title': locale.webDevelopment,
+        'instructor': 'Prof. Johnson',
+        'icon': Icons.language,
+      },
+      {
+        'title': locale.uiUxDesign,
+        'instructor': 'Ms. Williams',
+        'icon': Icons.design_services,
+      },
+      {
+        'title': locale.dataScience,
+        'instructor': 'Dr. Brown',
+        'icon': Icons.analytics,
+      },
+      {
+        'title': locale.machineLearning,
+        'instructor': 'Prof. Davis',
+        'icon': Icons.psychology,
+      },
+      {
+        'title': locale.advancedFlutter,
+        'instructor': 'Dr. Miller',
+        'icon': Icons.code,
+      },
+      {
+        'title': locale.webSecurity,
+        'instructor': 'Prof. Wilson',
+        'icon': Icons.security,
+      },
+      {
+        'title': locale.cloudComputing,
+        'instructor': 'Dr. Taylor',
+        'icon': Icons.cloud,
+      },
+    ];
+    
+    final List<Map<String, dynamic>> recommendedCourses = [
+      {
+        'title': locale.uiUxDesign,
+        'instructor': 'Ms. Williams',
+        'progress': 0.2,
+        'icon': Icons.design_services,
+      },
+      {
+        'title': locale.dataScience,
+        'instructor': 'Dr. Brown',
+        'progress': 0.5,
+        'icon': Icons.analytics,
+      },
+      {
+        'title': locale.cloudComputing,
+        'instructor': 'Dr. Taylor',
+        'progress': 0.1,
+        'icon': Icons.cloud,
+      },
+      {
+        'title': locale.machineLearning,
+        'instructor': 'Prof. Davis',
+        'progress': 0.7,
+        'icon': Icons.psychology,
+      },
+    ];
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -119,8 +190,9 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: 4,
+                itemCount: myCourses.length,
                 itemBuilder: (context, index) {
+                  final course = myCourses[index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
@@ -143,28 +215,30 @@ class _CoursesScreenState extends State<CoursesScreen> {
                           color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(
-                          Icons.code,
-                          color: Color(0xFFB23A3A),
+                        child: Icon(
+                          (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
+                          color: const Color(0xFFB23A3A),
                         ),
                       ),
                       title: Text(
-                        '${locale.course} ${index + 1}',
+                        (course['title'] != null) ? course['title'].toString() : 'Course',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(locale.instructorName),
+                      subtitle: Text((course['instructor'] != null) ? course['instructor'].toString() : 'Instructor'),
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 16,
                         color: Colors.grey,
                       ),
                       onTap: () {
+                        String courseTitle = (course['title'] != null) ? course['title'].toString() : 'Course';
+                        String courseInstructor = (course['instructor'] != null) ? course['instructor'].toString() : 'Instructor';
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => CourseDetailScreen(
-                              courseTitle: '${locale.course} ${index + 1}',
-                              courseInstructor: locale.instructorName,
-                              courseDescription: locale.courseDescriptionText,
+                              courseTitle: courseTitle,
+                              courseInstructor: courseInstructor,
+                              courseDescription: locale.courseDescriptionPlaceholder,
                             ),
                           ),
                         );
@@ -208,13 +282,17 @@ class _CoursesScreenState extends State<CoursesScreen> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                children: [
-                  _buildCourseCard('Flutter Mastery', 'Dr. Smith', 0.7),
-                  const SizedBox(width: 16),
-                  _buildCourseCard('UI/UX Design', 'Jane Doe', 0.4),
-                  const SizedBox(width: 16),
-                  _buildCourseCard('Backend Development', 'John Wilson', 0.2),
-                ],
+                children: List.generate(recommendedCourses.length, (index) {
+                  final course = recommendedCourses[index];
+                  String title = (course['title'] != null) ? course['title'].toString() : 'Course';
+                  String instructor = (course['instructor'] != null) ? course['instructor'].toString() : 'Instructor';
+                  double progress = 0.0;
+                  if (course['progress'] != null && course['progress'] is num) {
+                    progress = course['progress'].toDouble();
+                  }
+                  IconData icon = (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school;
+                  return _buildCourseCardWithIcon(title, instructor, progress, icon);
+                }),
               ),
             ),
             
@@ -251,6 +329,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
   Widget _buildCourseCard(String title, String instructor, double progress) {
     return Container(
       width: 200,
+      margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -276,9 +355,79 @@ class _CoursesScreenState extends State<CoursesScreen> {
               ),
             ),
             child: const Icon(
-              Icons.code,
+              Icons.school, // Default icon
               size: 40,
               color: Color(0xFFB23A3A),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  instructor,
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                LinearProgressIndicator(
+                  value: progress,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    Color(0xFFB23A3A),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCourseCardWithIcon(String title, String instructor, double progress, IconData icon) {
+    return Container(
+      width: 200,
+      margin: const EdgeInsets.only(right: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.1),
+            spreadRadius: 1,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 100,
+            decoration: BoxDecoration(
+              color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
+            child: Icon(
+              icon,
+              size: 40,
+              color: const Color(0xFFB23A3A),
             ),
           ),
           Padding(

@@ -9,12 +9,20 @@ import 'home_screen.dart';
 import 'tab_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
+import 'providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => LanguageProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => LanguageProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
@@ -48,8 +56,8 @@ class MyApp extends StatelessWidget {
           initialRoute: '/splash', // Start from splash screen
           routes: {
             '/': (context) => const MyAppShell(),
-            '/login': (context) => const LoginPage(),
-            '/register': (context) => const RegisterPage(),
+            '/login': (context) => _buildClearUserPage(const LoginPage()),
+            '/register': (context) => _buildClearUserPage(const RegisterPage()),
             '/splash': (context) => const SplashScreen(),
           },
         );
@@ -113,4 +121,14 @@ class _MyAppShellState extends State<MyAppShell> {
       ),
     );
   }
+}
+
+Widget _buildClearUserPage(Widget page) {
+  return Builder(
+    builder: (context) {
+      // Clear user data when navigating to login or register
+      Provider.of<UserProvider>(context, listen: false).clearUser();
+      return page;
+    },
+  );
 }

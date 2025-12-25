@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
+import 'providers/user_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,6 +14,54 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    
+    // Data palsu untuk kursus-kursus
+    final List<Map<String, dynamic>> continueLearningCourses = [
+      {
+        'title': locale.flutterDevelopment,
+        'progress': 0.8,
+        'icon': Icons.code,
+      },
+      {
+        'title': locale.webDevelopment,
+        'progress': 0.6,
+        'icon': Icons.language,
+      },
+      {
+        'title': locale.uiUxDesign,
+        'progress': 0.3,
+        'icon': Icons.design_services,
+      },
+      {
+        'title': locale.dataScience,
+        'progress': 0.9,
+        'icon': Icons.analytics,
+      },
+      {
+        'title': locale.machineLearning,
+        'progress': 0.4,
+        'icon': Icons.psychology,
+      },
+    ];
+    
+    final List<Map<String, dynamic>> popularCourses = [
+      {
+        'title': locale.advancedFlutter,
+        'instructor': 'Dr. Anderson',
+        'icon': Icons.code,
+      },
+      {
+        'title': locale.webSecurity,
+        'instructor': 'Prof. Johnson',
+        'icon': Icons.security,
+      },
+      {
+        'title': locale.cloudComputing,
+        'instructor': 'Ms. Williams',
+        'icon': Icons.cloud,
+      },
+    ];
     
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
@@ -66,9 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'John Doe',
-                    style: TextStyle(
+                  Text(
+                    userProvider.name ?? 'User',
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white70,
                     ),
@@ -80,17 +130,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const TextField(
-                      style: TextStyle(color: Colors.white),
+                    child: TextField(
+                      style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        hintText: 'Search courses...',
-                        hintStyle: TextStyle(color: Colors.white70),
+                        hintText: locale.searchCourses,
+                        hintStyle: const TextStyle(color: Colors.white70),
                         prefixIcon: Icon(
                           Icons.search,
                           color: Colors.white70,
                         ),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       ),
                     ),
                   ),
@@ -131,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      'View All',
+                      locale.seeAll,
                       style: const TextStyle(color: Color(0xFFB23A3A)),
                     ),
                   ),
@@ -146,13 +196,15 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                children: [
-                  _buildCourseCard('Flutter Development 1', 0.8),
-                  const SizedBox(width: 16),
-                  _buildCourseCard('Flutter Development 2', 0.6),
-                  const SizedBox(width: 16),
-                  _buildCourseCard('Flutter Development 3', 0.3),
-                ],
+                children: List.generate(continueLearningCourses.length, (index) {
+                  final course = continueLearningCourses[index];
+                  String title = course['title']?.toString() ?? 'Course';
+                  double progress = 0.0;
+                  if (course['progress'] != null && course['progress'] is num) {
+                    progress = course['progress'].toDouble();
+                  }
+                  return _buildCourseCard(title, progress, locale);
+                }),
               ),
             ),
 
@@ -180,8 +232,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: 3,
+                itemCount: popularCourses.length,
                 itemBuilder: (context, index) {
+                  final course = popularCourses[index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
@@ -204,16 +257,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(
-                          Icons.school,
-                          color: Color(0xFFB23A3A),
+                        child: Icon(
+                          (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
+                          color: const Color(0xFFB23A3A),
                         ),
                       ),
                       title: Text(
-                        'Course ${index + 1}',
+                        (course['title'] != null) ? course['title'].toString() : 'Course',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Instructor Name'),
+                      subtitle: Text((course['instructor'] != null) ? course['instructor'].toString() : 'Instructor'),
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 16,
@@ -271,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCourseCard(String title, double progress) {
+  Widget _buildCourseCard(String title, double progress, AppLocalizations locale) {
     return Container(
       width: 280,
       decoration: BoxDecoration(
@@ -318,9 +371,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  const Text(
-                    '80% Complete',
-                    style: TextStyle(
+                  Text(
+                    '${(progress * 100).round()}% ${locale.completed}',
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 12,
                     ),

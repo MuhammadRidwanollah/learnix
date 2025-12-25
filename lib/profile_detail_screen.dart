@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
+import 'providers/user_provider.dart';
 
 class ProfileDetailScreen extends StatelessWidget {
-  final String name;
+  final String? name;
   final String? email;
   final String? studentId;
   final String? program;
@@ -13,7 +15,7 @@ class ProfileDetailScreen extends StatelessWidget {
 
   const ProfileDetailScreen({
     super.key,
-    required this.name,
+    this.name,
     this.email,
     this.studentId,
     this.program,
@@ -26,6 +28,17 @@ class ProfileDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
+    final userProvider = Provider.of<UserProvider>(context);
+    
+    // Use passed values or fallback to provider values
+    String displayName = name ?? userProvider.name ?? 'User';
+    String displayEmail = email ?? userProvider.email ?? locale.emailPlaceholder;
+    String displayStudentId = studentId ?? userProvider.studentId ?? locale.studentIdPlaceholder;
+    String displayProgram = program ?? userProvider.program ?? locale.computerScience;
+    String displayYear = year ?? userProvider.year ?? locale.year3;
+    int displayCompletedCourses = completedCourses ?? userProvider.completedCourses ?? 0;
+    int displayEnrolledCourses = enrolledCourses ?? userProvider.enrolledCourses ?? 0;
+    double displayGpa = gpa ?? userProvider.gpa ?? 0.0;
     
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
@@ -79,14 +92,14 @@ class ProfileDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    name,
+                    displayName,
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    email ?? locale.emailPlaceholder,
+                    displayEmail,
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[600],
@@ -128,21 +141,21 @@ class ProfileDetailScreen extends StatelessWidget {
                       Expanded(
                         child: _buildStatItem(
                           Icons.check_circle,
-                          (completedCourses ?? 8).toString(),
+                          displayCompletedCourses.toString(),
                           locale.completedCourses,
                         ),
                       ),
                       Expanded(
                         child: _buildStatItem(
                           Icons.school,
-                          (enrolledCourses ?? 3).toString(),
+                          displayEnrolledCourses.toString(),
                           locale.enrolledCourses,
                         ),
                       ),
                       Expanded(
                         child: _buildStatItem(
                           Icons.star,
-                          (gpa ?? 3.7).toString(),
+                          displayGpa.toStringAsFixed(1),
                           locale.gpa,
                         ),
                       ),
@@ -152,19 +165,19 @@ class ProfileDetailScreen extends StatelessWidget {
                   _buildProfileInfoItem(
                     Icons.badge,
                     locale.personalInfo,
-                    studentId ?? locale.studentIdPlaceholder,
+                    displayStudentId,
                   ),
                   const SizedBox(height: 12),
                   _buildProfileInfoItem(
                     Icons.work,
                     locale.academicInfo,
-                    program ?? locale.computerScience,
+                    displayProgram,
                   ),
                   const SizedBox(height: 12),
                   _buildProfileInfoItem(
                     Icons.calendar_today,
                     locale.academicYear,
-                    year ?? locale.year3,
+                    displayYear,
                   ),
                 ],
               ),

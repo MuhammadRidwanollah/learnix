@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
+import 'providers/user_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -269,8 +271,22 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    // For now, just navigate to main app (bypassing auth)
-    Navigator.of(context).pushReplacementNamed('/'); // This would navigate to main app
+    // Create user and store in provider
+    User user = User(
+      name: _nameController.text,
+      email: _emailController.text,
+      studentId: 'S${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}${_emailController.text.hashCode.abs().toString().substring(0, 4)}',
+      program: 'Computer Science',
+      year: 'Year 3',
+      completedCourses: 0,
+      enrolledCourses: 1, // New user has enrolled in 1 course
+      gpa: 0.0,
+    );
+    
+    Provider.of<UserProvider>(context, listen: false).setUser(user);
+    
+    // Navigate to main app
+    Navigator.of(context).pushReplacementNamed('/');
   }
 
   @override

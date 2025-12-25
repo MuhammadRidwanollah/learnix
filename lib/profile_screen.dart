@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
 import 'localization/language_provider.dart';
+import 'providers/user_provider.dart';
 import 'profile_detail_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
@@ -60,18 +62,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'John Doe',
-                    style: TextStyle(
+                  Text(
+                    userProvider.name ?? 'User',
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'john.doe@example.com',
-                    style: TextStyle(
+                  Text(
+                    userProvider.email ?? 'No email',
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white70,
                     ),
@@ -94,9 +96,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const ProfileDetailScreen(
-                            name: 'John Doe',
-                            email: 'john.doe@example.com',
+                          builder: (context) => ProfileDetailScreen(
+                            name: userProvider.name ?? 'User',
+                            email: userProvider.email,
+                            studentId: userProvider.studentId,
+                            program: userProvider.program,
+                            year: userProvider.year,
+                            completedCourses: userProvider.completedCourses,
+                            enrolledCourses: userProvider.enrolledCourses,
+                            gpa: userProvider.gpa,
                           ),
                         ),
                       );
@@ -124,7 +132,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Icons.logout,
                     locale.logout,
                     () {
-                      // Navigate back to login screen
+                      // Clear user data and navigate back to login screen
+                      Provider.of<UserProvider>(context, listen: false).clearUser();
                       Navigator.of(context).pushReplacementNamed('/login');
                     },
                   ),
