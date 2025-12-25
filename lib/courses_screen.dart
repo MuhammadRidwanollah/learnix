@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'course_detail_screen.dart';
 
 class CoursesScreen extends StatefulWidget {
@@ -11,14 +12,16 @@ class CoursesScreen extends StatefulWidget {
 class _CoursesScreenState extends State<CoursesScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'My Courses',
-          style: TextStyle(
+        title: Text(
+          locale.myCourses,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -45,15 +48,15 @@ class _CoursesScreenState extends State<CoursesScreen> {
                     ),
                   ],
                 ),
-                child: const TextField(
+                child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Search courses...',
-                    prefixIcon: Icon(
+                    hintText: locale.searchCourses,
+                    prefixIcon: const Icon(
                       Icons.search,
                       color: Color(0xFFB23A3A),
                     ),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   ),
                 ),
               ),
@@ -67,7 +70,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    _buildCategoryChip('All', true),
+                    _buildCategoryChip(locale.all, true),
                     const SizedBox(width: 8),
                     _buildCategoryChip('Web Dev', false),
                     const SizedBox(width: 8),
@@ -89,18 +92,18 @@ class _CoursesScreenState extends State<CoursesScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'My Courses',
-                    style: TextStyle(
+                  Text(
+                    locale.myCourses,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
-                      'See All',
-                      style: TextStyle(color: Color(0xFFB23A3A)),
+                    child: Text(
+                      locale.seeAll,
+                      style: const TextStyle(color: Color(0xFFB23A3A)),
                     ),
                   ),
                 ],
@@ -146,10 +149,10 @@ class _CoursesScreenState extends State<CoursesScreen> {
                         ),
                       ),
                       title: Text(
-                        'Course ${index + 1}',
+                        '${locale.course} ${index + 1}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Instructor Name'),
+                      subtitle: Text(locale.instructorName),
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 16,
@@ -159,9 +162,9 @@ class _CoursesScreenState extends State<CoursesScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => CourseDetailScreen(
-                              courseTitle: 'Course ${index + 1}',
-                              instructor: 'Instructor Name',
-                              description: 'This is a comprehensive course covering all the fundamentals and advanced topics in this subject area. Perfect for beginners and intermediate learners.',
+                              courseTitle: '${locale.course} ${index + 1}',
+                              courseInstructor: locale.instructorName,
+                              courseDescription: locale.courseDescriptionText,
                             ),
                           ),
                         );
@@ -180,18 +183,18 @@ class _CoursesScreenState extends State<CoursesScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Recommended for You',
-                    style: TextStyle(
+                  Text(
+                    locale.recommendedForYou,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
-                      'See All',
-                      style: TextStyle(color: Color(0xFFB23A3A)),
+                    child: Text(
+                      locale.seeAll,
+                      style: const TextStyle(color: Color(0xFFB23A3A)),
                     ),
                   ),
                 ],

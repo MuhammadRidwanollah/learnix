@@ -107,8 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildStatCard(locale.myCourses, '8', Icons.book_outlined),
-                  _buildStatCard('Completed', '3', Icons.check_circle_outline),
-                  _buildStatCard('Pending', '5', Icons.access_time),
+                  _buildStatCard(locale.completedCourses, '3', Icons.check_circle_outline),
+                  _buildStatCard(locale.pending, '5', Icons.access_time),
                 ],
               ),
             ),
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Continue Learning',
+                    locale.continueLearning,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Text(
-                'Popular Courses',
+                locale.popularCourses,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

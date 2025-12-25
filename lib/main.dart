@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          initialRoute: '/splash', // Mulai dari splash screen
+          initialRoute: '/splash', // Start from splash screen
           routes: {
             '/': (context) => const MyAppShell(),
             '/login': (context) => const LoginPage(),

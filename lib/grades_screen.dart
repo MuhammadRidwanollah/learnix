@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'grade_detail_screen.dart';
 
 class GradesScreen extends StatefulWidget {
@@ -11,14 +12,16 @@ class GradesScreen extends StatefulWidget {
 class _GradesScreenState extends State<GradesScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Grades',
-          style: TextStyle(
+        title: Text(
+          locale.grades,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -46,9 +49,9 @@ class _GradesScreenState extends State<GradesScreen> {
               ),
               child: Column(
                 children: [
-                  const Text(
-                    'Overall Grade',
-                    style: TextStyle(
+                  Text(
+                    locale.overallGrade,
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey,
@@ -60,7 +63,7 @@ class _GradesScreenState extends State<GradesScreen> {
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFB23A3A),
+                      color: const Color(0xFFB23A3A),
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -81,18 +84,18 @@ class _GradesScreenState extends State<GradesScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Course Grades',
-                    style: TextStyle(
+                  Text(
+                    locale.courseGrades,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
-                      'View All',
-                      style: TextStyle(color: Color(0xFFB23A3A)),
+                    child: Text(
+                      locale.seeAll,
+                      style: const TextStyle(color: Color(0xFFB23A3A)),
                     ),
                   ),
                 ],
@@ -138,10 +141,10 @@ class _GradesScreenState extends State<GradesScreen> {
                         ),
                       ),
                       title: Text(
-                        'Course ${index + 1}',
+                        '${locale.course} ${index + 1}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Instructor Name'),
+                      subtitle: Text(locale.instructorName),
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -167,9 +170,8 @@ class _GradesScreenState extends State<GradesScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => GradeDetailScreen(
-                              courseName: 'Course ${index + 1}',
-                              grade: 'A+',
-                              percentage: 98.5,
+                              courseName: '${locale.course} ${index + 1}',
+                              grade: '98.5',
                               letterGrade: 'A+',
                             ),
                           ),
@@ -189,7 +191,8 @@ class _GradesScreenState extends State<GradesScreen> {
   }
 
   String _getGrade(int index) {
-    List<String> grades = ['A+', 'A', 'B+', 'A-'];
+    final locale = AppLocalizations.of(context);
+    List<String> grades = [locale.aPlus, locale.a, locale.bPlus, locale.aMinus];
     return grades[index % grades.length];
   }
 

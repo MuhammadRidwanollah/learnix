@@ -51,7 +51,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Notification Settings',
+                    locale.notificationSettings,
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
@@ -143,10 +143,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => NotificationDetailScreen(
-                            title: 'Notification Title',
-                            message: 'This is the notification message. It contains detailed information about the notification and any relevant details.',
-                            type: 'Course',
-                            time: '2 min ago',
+                            title: locale.notificationTitle,
+                            message: locale.notificationMessage,
+                            type: locale.course,
+                            time: locale.twoMinAgo,
                           ),
                         ),
                       );
@@ -162,6 +162,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   IconData _getNotificationIcon(int index) {
+    final locale = AppLocalizations.of(context);
     switch (index % 4) {
       case 0:
         return Icons.school;
@@ -175,41 +176,44 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   }
 
   String _getNotificationTitle(int index) {
+    final locale = AppLocalizations.of(context);
     switch (index % 4) {
       case 0:
-        return 'New Course Available';
+        return locale.newCourseAvailable;
       case 1:
-        return 'Assignment Due Soon';
+        return locale.assignmentDueSoon;
       case 2:
-        return 'Upcoming Event';
+        return locale.upcomingEvent;
       default:
-        return 'New Notification';
+        return locale.newNotification;
     }
   }
 
   String _getNotificationSubtitle(int index) {
+    final locale = AppLocalizations.of(context);
     switch (index % 4) {
       case 0:
-        return 'Check out our new Flutter course';
+        return locale.checkOutNewFlutterCourse;
       case 1:
-        return 'Your assignment is due in 2 days';
+        return locale.assignmentDueInTwoDays;
       case 2:
-        return 'Webinar on mobile development';
+        return locale.webinarOnMobileDevelopment;
       default:
-        return 'You have a new notification';
+        return locale.youHaveNewNotification;
     }
   }
 
   String _getNotificationTime(int index) {
+    final locale = AppLocalizations.of(context);
     List<String> times = [
-      '2 min ago',
-      '15 min ago',
-      '1 hour ago',
-      '3 hours ago',
-      '5 hours ago',
-      '1 day ago',
-      '2 days ago',
-      '3 days ago',
+      locale.oneMinAgo,
+      locale.twoMinAgo,
+      locale.fiveMinAgo,
+      locale.tenMinAgo,
+      locale.fifteenMinAgo,
+      locale.twentyMinAgo,
+      locale.thirtyMinAgo,
+      locale.oneHourAgo,
     ];
     return times[index % times.length];
   }

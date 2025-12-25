@@ -64,8 +64,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Learning Management System',
+              Text(
+                locale.learningManagementSystem,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white70,

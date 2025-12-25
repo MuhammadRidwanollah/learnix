@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'resource_detail_screen.dart';
 
 class ResourcesScreen extends StatefulWidget {
@@ -11,14 +12,16 @@ class ResourcesScreen extends StatefulWidget {
 class _ResourcesScreenState extends State<ResourcesScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Resources',
-          style: TextStyle(
+        title: Text(
+          locale.resources,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -36,15 +39,15 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    _buildCategoryChip('All', true),
+                    _buildCategoryChip(locale.all, true),
                     const SizedBox(width: 8),
-                    _buildCategoryChip('Documents', false),
+                    _buildCategoryChip(locale.documents, false),
                     const SizedBox(width: 8),
-                    _buildCategoryChip('Videos', false),
+                    _buildCategoryChip(locale.videos, false),
                     const SizedBox(width: 8),
-                    _buildCategoryChip('Links', false),
+                    _buildCategoryChip(locale.links, false),
                     const SizedBox(width: 8),
-                    _buildCategoryChip('Books', false),
+                    _buildCategoryChip(locale.books, false),
                   ],
                 ),
               ),
@@ -56,18 +59,18 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Recent Resources',
-                    style: TextStyle(
+                  Text(
+                    locale.recentResources,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   TextButton(
                     onPressed: () {},
-                    child: const Text(
-                      'See All',
-                      style: TextStyle(color: Color(0xFFB23A3A)),
+                    child: Text(
+                      locale.seeAll,
+                      style: const TextStyle(color: Color(0xFFB23A3A)),
                     ),
                   ),
                 ],
@@ -128,10 +131,9 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => ResourceDetailScreen(
-                              resourceName: 'Resource ${index + 1}',
+                              resourceName: '${locale.resource} ${index + 1}',
                               resourceType: 'Document',
-                              courseName: 'Course ${index + 1}',
-                              description: 'This is a detailed description of the resource. It contains important information that students need to know about this particular learning material.',
+                              description: locale.resourceDescription,
                             ),
                           ),
                         );
@@ -162,25 +164,27 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
   }
 
   String _getResourceTitle(int index) {
+    final locale = AppLocalizations.of(context);
     List<String> titles = [
-      'Course Syllabus.pdf',
-      'Lecture Video: Introduction',
-      'External Resource Link',
-      'Textbook Chapter 1',
-      'Assignment Guidelines.pdf',
-      'Downloadable Materials',
+      locale.courseSyllabusPdf,
+      locale.lectureVideoIntroduction,
+      locale.externalResourceLink,
+      locale.textbookChapter1,
+      locale.assignmentGuidelinesPdf,
+      locale.downloadableMaterials,
     ];
     return titles[index % titles.length];
   }
 
   String _getResourceSubtitle(int index) {
+    final locale = AppLocalizations.of(context);
     List<String> subtitles = [
-      'Course Materials',
-      'Video Lecture',
-      'External Link',
-      'Reading Material',
-      'Assignment Guide',
-      'Downloads',
+      locale.courseMaterials,
+      locale.videoLecture,
+      locale.externalLink,
+      locale.readingMaterial,
+      locale.assignmentGuide,
+      locale.downloads,
     ];
     return subtitles[index % subtitles.length];
   }

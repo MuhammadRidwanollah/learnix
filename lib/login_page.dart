@@ -78,9 +78,9 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
-                      'Learnix',
+                      locale.title,
                       style: TextStyle(
                         fontSize: 26,
                         fontWeight: FontWeight.bold,
@@ -185,9 +185,9 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     children: [
                       const Expanded(child: Divider()),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text('OR'),
+                        child: Text(locale.or),
                       ),
                       const Expanded(child: Divider()),
                     ],

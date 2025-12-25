@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 import 'assignment_detail_screen.dart';
 
 class AssignmentsScreen extends StatefulWidget {
@@ -11,14 +12,16 @@ class AssignmentsScreen extends StatefulWidget {
 class _AssignmentsScreenState extends State<AssignmentsScreen> {
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text(
-          'Assignments',
-          style: TextStyle(
+        title: Text(
+          locale.assignments,
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -34,9 +37,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildCategoryCard('All', 12, Icons.assignment),
-                  _buildCategoryCard('Pending', 5, Icons.access_time),
-                  _buildCategoryCard('Completed', 7, Icons.check_circle),
+                  _buildCategoryCard(locale.all, 12, Icons.assignment),
+                  _buildCategoryCard(locale.pending, 5, Icons.access_time),
+                  _buildCategoryCard(locale.completed, 7, Icons.check_circle),
                 ],
               ),
             ),
@@ -79,10 +82,10 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                         ),
                       ),
                       title: Text(
-                        'Assignment ${index + 1}',
+                        '${locale.assignment} ${index + 1}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: const Text('Due in 3 days'),
+                      subtitle: Text(locale.dueInThreeDays),
                       trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 16,
@@ -92,9 +95,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => AssignmentDetailScreen(
-                              assignmentTitle: 'Assignment ${index + 1}',
-                              courseName: 'Course ${index + 1}',
-                              description: 'This is the assignment description. It contains all the necessary information about what needs to be completed, including requirements, guidelines, and submission instructions.',
+                              assignmentTitle: '${locale.assignment} ${index + 1}',
+                              courseName: '${locale.course} ${index + 1}',
+                              description: locale.assignmentDescription,
                             ),
                           ),
                         );
@@ -113,6 +116,8 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   }
 
   Widget _buildCategoryCard(String title, int count, IconData icon) {
+    final locale = AppLocalizations.of(context);
+    
     return Container(
       width: 100,
       padding: const EdgeInsets.all(12),

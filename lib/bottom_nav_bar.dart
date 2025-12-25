@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({super.key});
@@ -20,6 +21,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -27,7 +30,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             _selectedIndex == 0 ? Icons.home : Icons.home_outlined,
             color: _selectedIndex == 0 ? const Color(0xFFB23A3A) : Colors.grey,
           ),
-          label: 'Home',
+          label: locale.home,
           backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
@@ -35,7 +38,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             _selectedIndex == 1 ? Icons.book : Icons.book_outlined,
             color: _selectedIndex == 1 ? const Color(0xFFB23A3A) : Colors.grey,
           ),
-          label: 'Courses',
+          label: locale.courses,
           backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
@@ -43,7 +46,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             _selectedIndex == 2 ? Icons.notifications : Icons.notifications_outlined,
             color: _selectedIndex == 2 ? const Color(0xFFB23A3A) : Colors.grey,
           ),
-          label: 'Notifications',
+          label: locale.notifications,
           backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(
@@ -51,7 +54,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             _selectedIndex == 3 ? Icons.person : Icons.person_outlined,
             color: _selectedIndex == 3 ? const Color(0xFFB23A3A) : Colors.grey,
           ),
-          label: 'Profile',
+          label: locale.profile,
           backgroundColor: Colors.white,
         ),
       ],

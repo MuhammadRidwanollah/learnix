@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'localization/app_localizations.dart';
 
 class LessonScreen extends StatefulWidget {
   final String lessonTitle;
@@ -9,7 +10,7 @@ class LessonScreen extends StatefulWidget {
     super.key,
     required this.lessonTitle,
     required this.courseTitle,
-    this.lessonContent = 'This is the lesson content. Here you would see the actual content of the lesson, including text, images, videos, or interactive elements.',
+    this.lessonContent = '',
   });
 
   @override
@@ -21,6 +22,8 @@ class _LessonScreenState extends State<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -53,17 +56,17 @@ class _LessonScreenState extends State<LessonScreen> {
               color: Color(0xFFB23A3A),
             ),
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'share',
-                child: Text('Share'),
+                child: Text(locale.share),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'download',
-                child: Text('Download'),
+                child: Text(locale.download),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'report',
-                child: Text('Report Issue'),
+                child: Text(locale.reportIssue),
               ),
             ],
           ),
@@ -141,8 +144,8 @@ class _LessonScreenState extends State<LessonScreen> {
                     const SizedBox(height: 20),
 
                     // Additional Resources
-                    const Text(
-                      'Additional Resources',
+                    Text(
+                      locale.additionalResources,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -165,7 +168,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              'Lesson Notes.pdf',
+                              locale.lessonNotesPdf,
                               style: const TextStyle(
                                 color: Color(0xFFB23A3A),
                                 fontWeight: FontWeight.w500,
@@ -198,8 +201,8 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
-                      child: const Text(
-                        'Previous',
+                      child: Text(
+                        locale.previous,
                         style: TextStyle(
                           color: Color(0xFFB23A3A),
                           fontWeight: FontWeight.w500,
@@ -219,8 +222,8 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
-                      child: const Text(
-                        'Mark Complete',
+                      child: Text(
+                        locale.markComplete,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -239,8 +242,8 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
-                      child: const Text(
-                        'Next',
+                      child: Text(
+                        locale.next,
                         style: TextStyle(
                           color: Color(0xFFB23A3A),
                           fontWeight: FontWeight.w500,

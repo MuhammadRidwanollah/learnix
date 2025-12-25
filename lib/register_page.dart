@@ -243,28 +243,28 @@ class _RegisterPageState extends State<RegisterPage> {
     // Simple validation
     if (_nameController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your name')),
+        SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourName)),
       );
       return;
     }
     
     if (_emailController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your email')),
+        SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourEmail)),
       );
       return;
     }
     
     if (_passwordController.text.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password must be at least 6 characters')),
+        SnackBar(content: Text(AppLocalizations.of(context).passwordMustBeAtLeast6Characters)),
       );
       return;
     }
     
     if (_passwordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match')),
+        SnackBar(content: Text(AppLocalizations.of(context).passwordsDoNotMatch)),
       );
       return;
     }
