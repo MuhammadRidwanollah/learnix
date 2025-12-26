@@ -242,16 +242,22 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
     
     if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourEmail)),
-      );
+      // Periksa apakah widget masih terpasang sebelum menampilkan snackbar
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourEmail)),
+        );
+      }
       return;
     }
     
     if (password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).passwordMustBeAtLeast6Characters)),
-      );
+      // Periksa apakah widget masih terpasang sebelum menampilkan snackbar
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context).passwordMustBeAtLeast6Characters)),
+        );
+      }
       return;
     }
     
@@ -275,7 +281,9 @@ class _LoginPageState extends State<LoginPage> {
     Provider.of<UserProvider>(context, listen: false).setUser(user);
     
     // Navigate to main app
-    Navigator.of(context).pushReplacementNamed('/');
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed('/');
+    }
   }
 
   @override

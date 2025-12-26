@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
 import 'localization/language_provider.dart';
 import 'providers/user_provider.dart';
-import 'profile_detail_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -33,117 +32,99 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         centerTitle: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Profile Header
-            Container(
-              padding: const EdgeInsets.all(24.0),
-              decoration: const BoxDecoration(
-                color: Color(0xFFB23A3A),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+      body: Column(
+        children: [
+          // Profile Header
+          Container(
+            padding: const EdgeInsets.all(24.0),
+            decoration: const BoxDecoration(
+              color: Color(0xFFB23A3A),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              children: [
+                const CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.white,
+                  child: CircleAvatar(
+                    radius: 48,
+                    child: Icon(
+                      Icons.person,
+                      size: 50,
+                      color: Color(0xFFB23A3A),
+                    ),
+                  ),
                 ),
-              ),
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                      radius: 48,
-                      backgroundImage: AssetImage('assets/images/profile.jpg'),
-                      child: Icon(
-                        Icons.person,
-                        size: 50,
-                        color: Color(0xFFB23A3A),
-                      ),
-                    ),
+                const SizedBox(height: 16),
+                Text(
+                  userProvider.name ?? 'User',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    userProvider.name ?? 'User',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  userProvider.email ?? 'No email',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.white70,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    userProvider.email ?? 'No email',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white70,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
 
-            const SizedBox(height: 20),
+          const SizedBox(height: 20),
 
-            // Profile Options
-            Padding(
+          // Profile Options
+          Expanded(
+            child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  _buildProfileOption(
-                    context,
-                    Icons.person,
-                    locale.profile,
-                    () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ProfileDetailScreen(
-                            name: userProvider.name ?? 'User',
-                            email: userProvider.email,
-                            studentId: userProvider.studentId,
-                            program: userProvider.program,
-                            year: userProvider.year,
-                            completedCourses: userProvider.completedCourses,
-                            enrolledCourses: userProvider.enrolledCourses,
-                            gpa: userProvider.gpa,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  _buildProfileOption(
-                    context,
-                    Icons.language,
-                    locale.language,
-                    () {
-                      _showLanguageDialog(context, languageProvider);
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  _buildProfileOption(
-                    context,
-                    Icons.settings,
-                    locale.settings,
-                    () {},
-                  ),
-                  const SizedBox(height: 12),
-                  _buildProfileOption(
-                    context,
-                    Icons.logout,
-                    locale.logout,
-                    () {
-                      // Clear user data and navigate back to login screen
-                      Provider.of<UserProvider>(context, listen: false).clearUser();
+              children: [
+                _buildProfileOption(
+                  context,
+                  Icons.person,
+                  locale.profile,
+                  () {},
+                ),
+                const SizedBox(height: 12),
+                _buildProfileOption(
+                  context,
+                  Icons.language,
+                  locale.language,
+                  () {
+                    _showLanguageDialog(context, languageProvider);
+                  },
+                ),
+                const SizedBox(height: 12),
+                _buildProfileOption(
+                  context,
+                  Icons.settings,
+                  locale.settings,
+                  () {},
+                ),
+                const SizedBox(height: 12),
+                _buildProfileOption(
+                  context,
+                  Icons.logout,
+                  locale.logout,
+                  () {
+                    // Clear user data and navigate back to login screen
+                    Provider.of<UserProvider>(context, listen: false).clearUser();
+                    if (context.mounted) {
                       Navigator.of(context).pushReplacementNamed('/login');
-                    },
-                  ),
-                ],
-              ),
+                    }
+                  },
+                ),
+              ],
             ),
-
-            const SizedBox(height: 20),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -155,6 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     VoidCallback onTap,
   ) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -212,7 +194,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // Using custom radio buttons to avoid deprecated properties
                     _buildDialogLanguageOption(
                       title: 'English',
                       value: 'en',
@@ -240,7 +221,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   },
                   child: const Text('Cancel'),
                 ),
@@ -252,7 +235,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     } else {
                       languageProvider.changeLanguage(const Locale('id', 'ID'));
                     }
-                    Navigator.of(context).pop();
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
                   },
                   child: const Text('OK'),
                 ),

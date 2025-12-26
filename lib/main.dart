@@ -59,6 +59,7 @@ class MyApp extends StatelessWidget {
             '/login': (context) => _buildClearUserPage(const LoginPage()),
             '/register': (context) => _buildClearUserPage(const RegisterPage()),
             '/splash': (context) => const SplashScreen(),
+            '/notifications': (context) => const NotificationsScreen(),
           },
         );
       },
@@ -91,28 +92,26 @@ class _MyAppShellState extends State<MyAppShell> {
 
   @override
   Widget build(BuildContext context) {
-    final locale = AppLocalizations.of(context);
-    
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home),
-            label: locale.home,
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.school),
-            label: locale.learning,
+            icon: Icon(Icons.school),
+            label: 'Learning',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.notifications),
-            label: locale.notifications,
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.person),
-            label: locale.profile,
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,

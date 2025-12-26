@@ -208,7 +208,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   Center(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                        }
                       },
                       child: Text(
                         locale.alreadyHaveAccount,
@@ -244,30 +246,38 @@ class _RegisterPageState extends State<RegisterPage> {
   void _register() {
     // Simple validation
     if (_nameController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourName)),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourName)),
+        );
+      }
       return;
     }
     
     if (_emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourEmail)),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context).pleaseEnterYourEmail)),
+        );
+      }
       return;
     }
     
     if (_passwordController.text.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).passwordMustBeAtLeast6Characters)),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context).passwordMustBeAtLeast6Characters)),
+        );
+      }
       return;
     }
     
     if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context).passwordsDoNotMatch)),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context).passwordsDoNotMatch)),
+        );
+      }
       return;
     }
 
@@ -286,7 +296,9 @@ class _RegisterPageState extends State<RegisterPage> {
     Provider.of<UserProvider>(context, listen: false).setUser(user);
     
     // Navigate to main app
-    Navigator.of(context).pushReplacementNamed('/');
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed('/');
+    }
   }
 
   @override
