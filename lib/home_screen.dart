@@ -11,13 +11,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String _searchQuery = '';
+  
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     final userProvider = Provider.of<UserProvider>(context);
     
     // Data palsu untuk kursus-kursus
-    final List<Map<String, dynamic>> continueLearningCourses = [
+    final List<Map<String, dynamic>> allCourses = [
       {
         'title': locale.flutterDevelopment,
         'progress': 0.8,
@@ -43,9 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
         'progress': 0.4,
         'icon': Icons.psychology,
       },
-    ];
-    
-    final List<Map<String, dynamic>> popularCourses = [
       {
         'title': locale.advancedFlutter,
         'instructor': 'Dr. Anderson',
@@ -63,6 +62,23 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     ];
     
+    // Filter kursus berdasarkan query pencarian
+    final List<Map<String, dynamic>> filteredCourses = _searchQuery.isEmpty
+        ? allCourses
+        : allCourses.where((course) {
+            final title = course['title']?.toString().toLowerCase() ?? '';
+            final instructor = course['instructor']?.toString().toLowerCase() ?? '';
+            final query = _searchQuery.toLowerCase();
+            return title.contains(query) || instructor.contains(query);
+          }).toList();
+    
+    // Pisahkan kursus untuk "Continue Learning" dan "Popular Courses"
+    final List<Map<String, dynamic>> continueLearningCourses = 
+        filteredCourses.where((course) => course.containsKey('progress')).take(5).toList();
+    
+    final List<Map<String, dynamic>> popularCourses = 
+        filteredCourses.where((course) => course.containsKey('instructor')).take(3).toList();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -142,6 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: InputBorder.none,
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          _searchQuery = value;
+                        });
+                      },
                     ),
                   ),
                 ],
@@ -166,117 +187,146 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 20),
 
             // Continue Learning Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    locale.continueLearning,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      locale.seeAll,
-                      style: const TextStyle(color: Color(0xFFB23A3A)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 10),
-
-            SizedBox(
-              height: 140,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
+            if (continueLearningCourses.isNotEmpty) ...[
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                children: List.generate(continueLearningCourses.length, (index) {
-                  final course = continueLearningCourses[index];
-                  String title = course['title']?.toString() ?? 'Course';
-                  double progress = 0.0;
-                  if (course['progress'] != null && course['progress'] is num) {
-                    progress = course['progress'].toDouble();
-                  }
-                  return _buildCourseCard(title, progress, locale);
-                }),
-              ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Popular Courses Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                locale.popularCourses,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      locale.continueLearning,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        locale.seeAll,
+                        style: const TextStyle(color: Color(0xFFB23A3A)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
 
-            const SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-            // Using ListView with shrinkWrap and NeverScrollablePhysics to avoid overflow
-            // This prevents the nested scrolling issue
-            SizedBox(
-              height: 300, // Fixed height to prevent overflow
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: popularCourses.length,
-                itemBuilder: (context, index) {
-                  final course = popularCourses[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.1),
-                          spreadRadius: 1,
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: ListTile(
-                      leading: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(
-                          (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
-                          color: const Color(0xFFB23A3A),
-                        ),
-                      ),
-                      title: Text(
-                        (course['title'] != null) ? course['title'].toString() : 'Course',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text((course['instructor'] != null) ? course['instructor'].toString() : 'Instructor'),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  );
-                },
+              SizedBox(
+                height: 140,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  children: List.generate(continueLearningCourses.length, (index) {
+                    final course = continueLearningCourses[index];
+                    String title = course['title']?.toString() ?? 'Course';
+                    double progress = 0.0;
+                    if (course['progress'] != null && course['progress'] is num) {
+                      progress = course['progress'].toDouble();
+                    }
+                    return _buildCourseCard(title, progress, locale);
+                  }),
+                ),
               ),
-            ),
+
+              const SizedBox(height: 20),
+            ],
+
+            // Popular Courses Section
+            if (popularCourses.isNotEmpty) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  locale.popularCourses,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              // Using ListView with shrinkWrap and NeverScrollablePhysics to avoid overflow
+              // This prevents the nested scrolling issue
+              SizedBox(
+                height: 300, // Fixed height to prevent overflow
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  itemCount: popularCourses.length,
+                  itemBuilder: (context, index) {
+                    final course = popularCourses[index];
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withValues(alpha: 0.1),
+                            spreadRadius: 1,
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
+                            color: const Color(0xFFB23A3A),
+                          ),
+                        ),
+                        title: Text(
+                          (course['title'] != null) ? course['title'].toString() : 'Course',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text((course['instructor'] != null) ? course['instructor'].toString() : 'Instructor'),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+            
+            if (filteredCourses.isEmpty && _searchQuery.isNotEmpty) ...[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.search_off,
+                        size: 64,
+                        color: Colors.grey[400],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        locale.noCoursesFound,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
             
             const SizedBox(height: 16), // Mengganti Container dengan SizedBox
           ],

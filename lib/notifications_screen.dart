@@ -14,218 +14,54 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
-    // Data palsu untuk notifikasi
-    final List<Map<String, dynamic>> notifications = [
-      {
-        'title': locale.newCourseAvailable,
-        'subtitle': locale.checkOutNewFlutterCourse,
-        'time': locale.oneMinAgo,
-        'isUnread': true,
-        'icon': Icons.school,
-        'type': locale.course,
-      },
-      {
-        'title': locale.assignmentDueSoon,
-        'subtitle': locale.assignmentDueTomorrow,
-        'time': locale.fiveMinAgo,
-        'isUnread': true,
-        'icon': Icons.assignment,
-        'type': locale.assignment,
-      },
-      {
-        'title': locale.upcomingEvent,
-        'subtitle': locale.webinarOnMobileDevelopment,
-        'time': locale.tenMinAgo,
-        'isUnread': true,
-        'icon': Icons.event,
-        'type': locale.event,
-      },
-      {
-        'title': locale.courseUpdate,
-        'subtitle': locale.newMaterialsAdded,
-        'time': locale.twentyMinAgo,
-        'isUnread': false,
-        'icon': Icons.book,
-        'type': locale.course,
-      },
-      {
-        'title': locale.newNotification,
-        'subtitle': locale.youHaveNewNotification,
-        'time': locale.thirtyMinAgo,
-        'isUnread': false,
-        'icon': Icons.notifications,
-        'type': locale.notifications,
-      },
-      {
-        'title': locale.assignmentDueSoon,
-        'subtitle': locale.assignmentDueInTwoDays,
-        'time': locale.oneHourAgo,
-        'isUnread': false,
-        'icon': Icons.assignment,
-        'type': locale.assignment,
-      },
-      {
-        'title': locale.newCourseAvailable,
-        'subtitle': locale.checkOutNewWebDevelopmentCourse,
-        'time': locale.twoHoursAgo,
-        'isUnread': false,
-        'icon': Icons.code,
-        'type': locale.course,
-      },
-      {
-        'title': locale.gradePosted,
-        'subtitle': locale.yourGradeForAssignment,
-        'time': locale.yesterday,
-        'isUnread': false,
-        'icon': Icons.grade,
-        'type': locale.grade,
-      },
-    ];
-    
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          locale.notifications,
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: false,
+        title: Text(locale.notifications),
       ),
-      body: Column(
-        children: [
-          // Notification Settings
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey.withValues(alpha: 0.1),
-                ),
-              ),
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.notifications_active,
-                  color: Color(0xFFB23A3A),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Text(
-                    locale.notificationSettings,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                Switch(
-                  value: true,
-                  onChanged: (value) {},
-                  activeTrackColor: const Color(0xFFB23A3A),
-                  activeThumbColor: const Color(0xFFB23A3A),
-                ),
-              ],
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          // Notification List
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16.0),
-              itemCount: notifications.length,
-              itemBuilder: (context, index) {
-                final notification = notifications[index];
-                bool isUnread = (notification['isUnread'] != null) ? notification['isUnread'] as bool : false;
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withValues(alpha: 0.1),
-                        spreadRadius: 1,
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: ListTile(
-                    leading: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: isUnread
-                            ? const Color(0xFFB23A3A).withValues(alpha: 0.1)
-                            : Colors.grey.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Icon(
-                        (notification['icon'] != null && notification['icon'] is IconData) ? notification['icon'] as IconData : Icons.notifications,
-                        color: isUnread ? const Color(0xFFB23A3A) : Colors.grey,
-                      ),
-                    ),
-                    title: Text(
-                      (notification['title'] != null) ? notification['title'].toString() : locale.newNotification,
-                      style: TextStyle(
-                        fontWeight: isUnread ? FontWeight.bold : FontWeight.normal,
-                      ),
-                    ),
-                    subtitle: Text(
-                      (notification['subtitle'] != null) ? notification['subtitle'].toString() : locale.youHaveNewNotification,
-                      style: const TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          (notification['time'] != null) ? notification['time'].toString() : locale.justNow,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        if (isUnread)
-                          Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFB23A3A),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => NotificationDetailScreen(
-                            title: (notification['title'] != null) ? notification['title'].toString() : locale.newNotification,
-                            message: (notification['subtitle'] != null) ? notification['subtitle'].toString() : locale.youHaveNewNotification,
-                            time: (notification['time'] != null) ? notification['time'].toString() : locale.justNow,
-                            type: (notification['type'] != null) ? notification['type'].toString() : locale.notifications,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
+      body: ListView.separated(
+        itemCount: 5,
+        separatorBuilder: (context, index) => const Divider(
+          height: 1,
+          thickness: 1,
+          indent: 16,
+          endIndent: 16,
+        ),
+        itemBuilder: (context, index) {
+          switch (index) {
+            case 0:
+              return ListTile(
+                title: Text(locale.newNotification),
+                subtitle: Text(locale.newCourseAvailableDescription),
+                trailing: Text(locale.oneHourAgo),
+              );
+            case 1:
+              return ListTile(
+                title: Text(locale.assignmentDueSoon),
+                subtitle: Text(locale.assignmentDueSoonDescription),
+                trailing: Text(locale.twoMinAgo),
+              );
+            case 2:
+              return ListTile(
+                title: Text(locale.upcomingEvent),
+                subtitle: Text(locale.upcomingEventDescription),
+                trailing: Text(locale.fiveMinAgo),
+              );
+            case 3:
+              return ListTile(
+                title: Text(locale.courseUpdate),
+                subtitle: Text(locale.courseUpdateDescription),
+                trailing: Text(locale.tenMinAgo),
+              );
+            case 4:
+              return ListTile(
+                title: Text(locale.gradePosted),
+                subtitle: Text(locale.gradePostedDescription),
+                trailing: Text(locale.oneMinAgo),
+              );
+            default:
+              return const SizedBox.shrink();
+          }
+        },
       ),
     );
   }

@@ -936,10 +936,6 @@ class AppLocalizations {
     return _localizedValues['oneHourAgo'] ?? '';
   }
 
-  String get twoHoursAgo {
-    return _localizedValues['twoHoursAgo'] ?? '';
-  }
-
   String get threeHoursAgo {
     return _localizedValues['threeHoursAgo'] ?? '';
   }
@@ -1038,6 +1034,26 @@ class AppLocalizations {
 
   String get next {
     return _localizedValues['next'] ?? '';
+  }
+
+  String get newCourseAvailableDescription {
+    return _localizedValues['newCourseAvailableDescription'] ?? '';
+  }
+
+  String get assignmentDueSoonDescription {
+    return _localizedValues['assignmentDueSoonDescription'] ?? '';
+  }
+
+  String get upcomingEventDescription {
+    return _localizedValues['upcomingEventDescription'] ?? '';
+  }
+
+  String get courseUpdateDescription {
+    return _localizedValues['courseUpdateDescription'] ?? '';
+  }
+
+  String get gradePostedDescription {
+    return _localizedValues['gradePostedDescription'] ?? '';
   }
 
   Map<String, String> get _localizedValues {
@@ -1269,6 +1285,12 @@ class AppLocalizations {
         'previous': 'Sebelumnya',
         'markComplete': 'Tandai Selesai',
         'next': 'Berikutnya',
+        'newCourseAvailableDescription': 'Sebuah kursus baru telah ditambahkan ke jalur pembelajaran Anda. Lihat kursus Pengembangan Flutter terbaru dengan materi komprehensif dan latihan praktis.',
+        'assignmentDueSoonDescription': 'Tugas Anda untuk Ilmu Komputer 101 jatuh tempo besok. Harap kirimkan pekerjaan Anda sebelum batas waktu untuk menghindari sanksi.',
+        'upcomingEventDescription': 'Ikuti webinar kami tentang Pengembangan Mobile hari Jumat ini pukul 14.00. Pelajari tren terbaru dan praktik terbaik dari para ahli industri.',
+        'courseUpdateDescription': 'Materi baru telah ditambahkan ke kursus Pengembangan Flutter Anda. Periksa konten terbaru dan latihan praktisnya.',
+        'gradePostedDescription': 'Nilai Anda untuk ujian tengah semester di Ilmu Komputer telah diposting. Anda sekarang dapat melihat skor dan umpan balik dari instruktur.',
+        'noCoursesFound': 'Tidak ada kursus yang ditemukan',
         'seeAll': 'Lihat Semua',
       };
     } else {
@@ -1501,6 +1523,13 @@ class AppLocalizations {
         'markComplete': 'Mark Complete',
         'next': 'Next',
         'seeAll': 'See All',
+        'newCourseAvailableDescription': 'A new course has been added to your learning path. Check out the latest Flutter Development course with comprehensive materials and practical exercises.',
+        'assignmentDueSoonDescription': 'Your assignment for Computer Science 101 is due tomorrow. Please submit your work before the deadline to avoid penalties.',
+        'upcomingEventDescription': 'Join our webinar on Mobile Development this Friday at 2 PM. Learn about the latest trends and best practices from industry experts.',
+        'courseUpdateDescription': 'New materials have been added to your Flutter Development course. Check the updated content and practice exercises.',
+        'gradePostedDescription': 'Your grade for the midterm exam in Computer Science has been posted. You can now view your score and feedback from the instructor.',
+        'noCoursesFound': 'No courses found',
+        'searchCourses': 'Search courses...'}
       };
     }
   }
