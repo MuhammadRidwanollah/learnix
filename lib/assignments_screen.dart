@@ -14,6 +14,50 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
+    // Data palsu untuk tugas
+    final List<Map<String, String>> assignments = [
+      {
+        'title': locale.assignmentDescription,
+        'course': locale.computerScience101,
+        'dueDate': locale.defaultDueDate,
+        'status': 'pending',
+        'description': locale.assignmentDescriptionPlaceholder,
+      },
+      {
+        'title': locale.assignment,
+        'course': locale.flutterDevelopment,
+        'dueDate': '2023-12-28',
+        'status': 'completed',
+        'description': locale.assignmentDescription,
+      },
+      {
+        'title': locale.assignment,
+        'course': locale.webDevelopment,
+        'dueDate': '2024-01-05',
+        'status': 'pending',
+        'description': locale.assignmentDescription,
+      },
+      {
+        'title': locale.assignment,
+        'course': locale.uiUxDesign,
+        'dueDate': '2023-12-20',
+        'status': 'completed',
+        'description': locale.assignmentDescription,
+      },
+      {
+        'title': locale.assignment,
+        'course': locale.dataScience,
+        'dueDate': '2024-01-15',
+        'status': 'inProgress',
+        'description': locale.assignmentDescription,
+      },
+    ];
+    
+    // Hitung jumlah tugas berdasarkan status
+    int allCount = assignments.length;
+    int pendingCount = assignments.where((assignment) => assignment['status'] == 'pending').length;
+    int completedCount = assignments.where((assignment) => assignment['status'] == 'completed').length;
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -37,9 +81,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildCategoryCard(locale.all, 12, Icons.assignment),
-                  _buildCategoryCard(locale.pending, 5, Icons.access_time),
-                  _buildCategoryCard(locale.completed, 7, Icons.check_circle),
+                  _buildCategoryCard(locale.all, allCount, Icons.assignment),
+                  _buildCategoryCard(locale.pending, pendingCount, Icons.access_time),
+                  _buildCategoryCard(locale.completed, completedCount, Icons.check_circle),
                 ],
               ),
             ),
@@ -52,8 +96,9 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: 5,
+                itemCount: assignments.length,
                 itemBuilder: (context, index) {
+                  final assignment = assignments[index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
@@ -82,22 +127,43 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                         ),
                       ),
                       title: Text(
-                        '${locale.assignment} ${index + 1}',
+                        assignment['title'] ?? '${locale.assignment} ${index + 1}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(locale.dueInThreeDays),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: Colors.grey,
+                      subtitle: Text('${locale.dueDate}: ${assignment['dueDate'] ?? locale.defaultDueDate}'),
+                      trailing: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: assignment['status'] == 'completed' 
+                              ? Colors.green.shade100 
+                              : assignment['status'] == 'inProgress' 
+                                  ? Colors.blue.shade100 
+                                  : Colors.orange.shade100,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          assignment['status'] == 'completed' 
+                              ? locale.completed 
+                              : assignment['status'] == 'inProgress' 
+                                  ? locale.inProgress 
+                                  : locale.pending,
+                          style: TextStyle(
+                            color: assignment['status'] == 'completed' 
+                                ? Colors.green[800] 
+                                : assignment['status'] == 'inProgress' 
+                                    ? Colors.blue[800] 
+                                    : Colors.orange[800],
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => AssignmentDetailScreen(
-                              assignmentTitle: '${locale.assignment} ${index + 1}',
-                              courseName: '${locale.course} ${index + 1}',
-                              description: locale.assignmentDescription,
+                              assignmentTitle: assignment['title'] ?? '${locale.assignment} ${index + 1}',
+                              courseName: assignment['course'] ?? '${locale.course} ${index + 1}',
+                              description: assignment['description'] ?? locale.assignmentDescription,
                             ),
                           ),
                         );
@@ -116,7 +182,6 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   }
 
   Widget _buildCategoryCard(String title, int count, IconData icon) {
-    final locale = AppLocalizations.of(context);
     
     return Container(
       width: 100,

@@ -38,7 +38,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             _selectedIndex == 1 ? Icons.book : Icons.book_outlined,
             color: _selectedIndex == 1 ? const Color(0xFFB23A3A) : Colors.grey,
           ),
-          label: locale.courses,
+          label: locale.learning,
           backgroundColor: Colors.white,
         ),
         BottomNavigationBarItem(

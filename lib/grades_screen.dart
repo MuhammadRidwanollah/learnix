@@ -14,6 +14,46 @@ class _GradesScreenState extends State<GradesScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
+    // Data palsu untuk nilai
+    final List<Map<String, String>> gradesData = [
+      {
+        'course': locale.flutterDevelopment,
+        'instructor': 'Dr. Anderson',
+        'letterGrade': locale.aPlus,
+        'percentage': '98.5',
+        'gradePoint': '4.0',
+      },
+      {
+        'course': locale.webDevelopment,
+        'instructor': 'Prof. Johnson',
+        'letterGrade': locale.a,
+        'percentage': '92.0',
+        'gradePoint': '3.7',
+      },
+      {
+        'course': locale.uiUxDesign,
+        'instructor': 'Ms. Williams',
+        'letterGrade': locale.aMinus,
+        'percentage': '88.5',
+        'gradePoint': '3.3',
+      },
+      {
+        'course': locale.dataScience,
+        'instructor': 'Dr. Smith',
+        'letterGrade': locale.a,
+        'percentage': '94.0',
+        'gradePoint': '3.7',
+      },
+    ];
+    
+    // Menghitung overall grade
+    double totalGradePoint = 0;
+    for (var grade in gradesData) {
+      totalGradePoint += double.tryParse(grade['gradePoint'] ?? '0.0') ?? 0.0;
+    }
+    double overallGPA = totalGradePoint / gradesData.length;
+    String overallLetterGrade = _getOverallLetterGrade(overallGPA);
+    
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -59,7 +99,7 @@ class _GradesScreenState extends State<GradesScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'A+',
+                    overallLetterGrade,
                     style: TextStyle(
                       fontSize: 48,
                       fontWeight: FontWeight.bold,
@@ -67,8 +107,8 @@ class _GradesScreenState extends State<GradesScreen> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    '4.0 / 4.0',
+                  Text(
+                    '${overallGPA.toStringAsFixed(1)} / 4.0',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -111,8 +151,9 @@ class _GradesScreenState extends State<GradesScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: 4,
+                itemCount: gradesData.length,
                 itemBuilder: (context, index) {
+                  final grade = gradesData[index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
@@ -141,24 +182,24 @@ class _GradesScreenState extends State<GradesScreen> {
                         ),
                       ),
                       title: Text(
-                        '${locale.course} ${index + 1}',
+                        grade['course'] ?? '${locale.course} ${index + 1}',
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(locale.instructorName),
+                      subtitle: Text(grade['instructor'] ?? locale.instructorName),
                       trailing: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            _getGrade(index),
+                            grade['letterGrade'] ?? _getLetterGrade(index),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: _getGradeColor(index),
+                              color: _getGradeColorForLetter(grade['letterGrade'] ?? _getLetterGrade(index)),
                             ),
                           ),
                           Text(
-                            '${_getPercentage(index)}%',
+                            '${grade['percentage']}%',
                             style: const TextStyle(
                               fontSize: 12,
                               color: Colors.grey,
@@ -170,9 +211,9 @@ class _GradesScreenState extends State<GradesScreen> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => GradeDetailScreen(
-                              courseName: '${locale.course} ${index + 1}',
-                              grade: '98.5',
-                              letterGrade: 'A+',
+                              courseName: grade['course'] ?? '${locale.course} ${index + 1}',
+                              grade: grade['percentage'] ?? '98.5',
+                              letterGrade: grade['letterGrade'] ?? 'A+',
                             ),
                           ),
                         );
@@ -190,24 +231,51 @@ class _GradesScreenState extends State<GradesScreen> {
     );
   }
 
-  String _getGrade(int index) {
+  String _getLetterGrade(int index) {
     final locale = AppLocalizations.of(context);
     List<String> grades = [locale.aPlus, locale.a, locale.bPlus, locale.aMinus];
     return grades[index % grades.length];
   }
 
-  Color _getGradeColor(int index) {
-    List<Color> colors = [
-      const Color(0xFF2E7D32), // Green for A+
-      const Color(0xFF388E3C), // Green for A
-      const Color(0xFF689F38), // Light green for B+
-      const Color(0xFF303F9F), // Blue for A-
-    ];
-    return colors[index % colors.length];
+  Color _getGradeColorForLetter(String letterGrade) {
+    final locale = AppLocalizations.of(context);
+    
+    if (letterGrade == locale.aPlus || letterGrade == 'A+') {
+      return const Color(0xFF2E7D32); // Green for A+
+    } else if (letterGrade == locale.a || letterGrade == 'A') {
+      return const Color(0xFF388E3C); // Green for A
+    } else if (letterGrade == locale.bPlus || letterGrade == 'B+') {
+      return const Color(0xFF689F38); // Light green for B+
+    } else if (letterGrade == locale.aMinus || letterGrade == 'A-') {
+      return const Color(0xFF303F9F); // Blue for A-
+    } else {
+      return const Color(0xFF2E7D32); // Default to green
+    }
   }
 
-  int _getPercentage(int index) {
-    List<int> percentages = [98, 92, 87, 94];
-    return percentages[index % percentages.length];
+  String _getOverallLetterGrade(double gpa) {
+    final locale = AppLocalizations.of(context);
+    
+    if (gpa >= 3.7) {
+      return locale.a;
+    } else if (gpa >= 3.3) {
+      return locale.aMinus;
+    } else if (gpa >= 3.0) {
+      return locale.bPlus;
+    } else if (gpa >= 2.7) {
+      return locale.b;
+    } else if (gpa >= 2.3) {
+      return locale.bMinus;
+    } else if (gpa >= 2.0) {
+      return locale.cPlus;
+    } else if (gpa >= 1.7) {
+      return locale.c;
+    } else if (gpa >= 1.3) {
+      return locale.cMinus;
+    } else if (gpa >= 1.0) {
+      return locale.d;
+    } else {
+      return locale.f;
+    }
   }
 }

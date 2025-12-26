@@ -170,6 +170,13 @@ class AppLocalizations {
   String get a => t('a');
   String get bPlus => t('bPlus');
   String get aMinus => t('aMinus');
+  String get b => t('b');
+  String get bMinus => t('bMinus');
+  String get c => t('c');
+  String get cMinus => t('cMinus');
+  String get cPlus => t('cPlus');
+  String get d => t('d');
+  String get f => t('f');
   String get assignment => t('assignment');
   String get courseAssignments => t('courseAssignments');
   String get courseQuizzes => t('courseQuizzes');
@@ -415,6 +422,13 @@ class AppLocalizations {
       'a': 'A',
       'bPlus': 'B+',
       'aMinus': 'A-',
+      'b': 'B',
+      'bMinus': 'B-',
+      'c': 'C',
+      'cMinus': 'C-',
+      'cPlus': 'C+',
+      'd': 'D',
+      'f': 'F',
       'assignment': 'Tugas',
       'courseAssignments': 'Tugas Kursus',
       'courseQuizzes': 'Kuis Kursus',
@@ -666,6 +680,13 @@ class AppLocalizations {
       'a': 'A',
       'bPlus': 'B+',
       'aMinus': 'A-',
+      'b': 'B',
+      'bMinus': 'B-',
+      'c': 'C',
+      'cMinus': 'C-',
+      'cPlus': 'C+',
+      'd': 'D',
+      'f': 'F',
       'assignment': 'Assignment',
       'courseAssignments': 'Course Assignments',
       'courseQuizzes': 'Course Quizzes',
