@@ -10,6 +10,14 @@ class CoursesScreen extends StatefulWidget {
 }
 
 class _CoursesScreenState extends State<CoursesScreen> {
+  late String _searchQuery;
+  
+  @override
+  void initState() {
+    super.initState();
+    _searchQuery = '';
+  }
+  
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
@@ -58,6 +66,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
       },
     ];
     
+    // Data untuk kursus rekomendasi
     final List<Map<String, dynamic>> recommendedCourses = [
       {
         'title': locale.uiUxDesign,
@@ -85,6 +94,16 @@ class _CoursesScreenState extends State<CoursesScreen> {
       },
     ];
     
+    // Filter kursus berdasarkan query pencarian
+    final List<Map<String, dynamic>> filteredMyCourses = _searchQuery.isEmpty || _searchQuery.trim() == ''
+        ? myCourses
+        : myCourses.where((course) {
+            final title = course['title']?.toString().toLowerCase() ?? '';
+            final instructor = course['instructor']?.toString().toLowerCase() ?? '';
+            final query = _searchQuery.toLowerCase();
+            return title.contains(query) || instructor.contains(query);
+          }).toList();
+
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FA),
       appBar: AppBar(
@@ -129,6 +148,11 @@ class _CoursesScreenState extends State<CoursesScreen> {
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      _searchQuery = value;
+                    });
+                  },
                 ),
               ),
             ),
@@ -186,67 +210,88 @@ class _CoursesScreenState extends State<CoursesScreen> {
             // Using SizedBox with fixed height to prevent overflow
             SizedBox(
               height: 300, // Fixed height to prevent overflow
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                itemCount: myCourses.length,
-                itemBuilder: (context, index) {
-                  final course = myCourses[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.1),
-                          spreadRadius: 1,
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: ListTile(
-                      leading: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Icon(
-                          (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
-                          color: const Color(0xFFB23A3A),
-                        ),
-                      ),
-                      title: Text(
-                        (course['title'] != null) ? course['title'].toString() : 'Course',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text((course['instructor'] != null) ? course['instructor'].toString() : 'Instructor'),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 16,
-                        color: Colors.grey,
-                      ),
-                      onTap: () {
-                        String courseTitle = (course['title'] != null) ? course['title'].toString() : 'Course';
-                        String courseInstructor = (course['instructor'] != null) ? course['instructor'].toString() : 'Instructor';
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => CourseDetailScreen(
-                              courseTitle: courseTitle,
-                              courseInstructor: courseInstructor,
-                              courseDescription: locale.courseDescriptionPlaceholder,
+              child: filteredMyCourses.isEmpty && _searchQuery.isNotEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.search_off,
+                            size: 64,
+                            color: Colors.grey[400],
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            locale.noCoursesFound,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[600],
                             ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      itemCount: filteredMyCourses.length,
+                      itemBuilder: (context, index) {
+                        final course = filteredMyCourses[index];
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withValues(alpha: 0.1),
+                                spreadRadius: 1,
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            leading: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Icon(
+                                (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
+                                color: const Color(0xFFB23A3A),
+                              ),
+                            ),
+                            title: Text(
+                              (course['title'] != null) ? course['title'].toString() : 'Course',
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text((course['instructor'] != null) ? course['instructor'].toString() : 'Instructor'),
+                            trailing: const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Colors.grey,
+                            ),
+                            onTap: () {
+                              String courseTitle = (course['title'] != null) ? course['title'].toString() : 'Course';
+                              String courseInstructor = (course['instructor'] != null) ? course['instructor'].toString() : 'Instructor';
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => CourseDetailScreen(
+                                    courseTitle: courseTitle,
+                                    courseInstructor: courseInstructor,
+                                    courseDescription: locale.courseDescriptionPlaceholder,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         );
                       },
                     ),
-                  );
-                },
-              ),
             ),
 
             const SizedBox(height: 20),
