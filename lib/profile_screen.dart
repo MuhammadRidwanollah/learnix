@@ -79,7 +79,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ),
 
-          const SizedBox(height: 20),
+
 
           // Profile Options
           Expanded(
@@ -89,8 +89,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 _buildProfileOption(
                   context,
                   Icons.person,
-                  locale.profile,
-                  () {},
+                  locale.viewProfile,
+                  () {
+                    _showProfileDetailDialog(context, userProvider, locale);
+                  },
                 ),
                 const SizedBox(height: 12),
                 _buildProfileOption(
@@ -176,6 +178,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildInfoRow(String label, String value) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 1,
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(
+            value,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+            ),
+            textAlign: TextAlign.right,
+          ),
+        ),
+      ],
+    );
+  }
+
   void _showLanguageDialog(
     BuildContext context,
     LanguageProvider languageProvider,
@@ -244,6 +275,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             );
           },
+        );
+      },
+    );
+  }
+
+  void _showProfileDetailDialog(
+    BuildContext context,
+    UserProvider userProvider,
+    AppLocalizations locale,
+  ) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(locale.personalInformation),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildInfoRow(locale.name, userProvider.name ?? locale.defaultUserName),
+                const SizedBox(height: 8),
+                _buildInfoRow(locale.email, userProvider.email ?? locale.defaultUserEmail),
+                const SizedBox(height: 8),
+                _buildInfoRow(locale.phoneNumber, '+62 812-3456-7890'),
+                const SizedBox(height: 8),
+                _buildInfoRow(locale.address, locale.defaultUserAddress),
+                const SizedBox(height: 8),
+                _buildInfoRow(locale.dateOfBirth, '15 Juni 1995'),
+                const SizedBox(height: 8),
+                _buildInfoRow(locale.studentId, 'STU2023001'),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
+              },
+              child: Text(locale.ok),
+            ),
+          ],
         );
       },
     );

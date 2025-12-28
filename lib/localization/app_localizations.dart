@@ -290,6 +290,15 @@ class AppLocalizations {
   String get readingMaterial => t('readingMaterial');
   String get assignmentGuide => t('assignmentGuide');
   String get downloads => t('downloads');
+  String get viewProfile => t('viewProfile');
+  String get personalInformation => t('personalInformation');
+  String get phoneNumber => t('phoneNumber');
+  String get address => t('address');
+  String get dateOfBirth => t('dateOfBirth');
+  String get studentId => t('studentId');
+  String get defaultUserName => t('defaultUserName');
+  String get defaultUserEmail => t('defaultUserEmail');
+  String get defaultUserAddress => t('defaultUserAddress');
 
   // 👉 Tambah getter lain SESUAI kebutuhan UI
   // =====================================================
@@ -554,7 +563,16 @@ class AppLocalizations {
       'courseSyllabusPdf': 'Silabus Kursus PDF',
       'lectureVideoIntroduction': 'Video Pengantar Kuliah',
       'externalResourceLink': 'Tautan Sumber Eksternal',
-      'pending': 'Tertunda'
+      'pending': 'Tertunda',
+      'personalInformation': 'Informasi Pribadi',
+      'phoneNumber': 'Nomor Telepon',
+      'address': 'Alamat',
+      'dateOfBirth': 'Tanggal Lahir',
+      'studentId': 'ID Mahasiswa',
+      'defaultUserName': 'Pengguna',
+      'viewProfile': 'Lihat Profil',
+      'defaultUserEmail': 'email@contoh.com',
+      'defaultUserAddress': 'Alamat Pengguna'
     },
     'en': {
       'title': 'Learnix',
@@ -689,6 +707,15 @@ class AppLocalizations {
       'f': 'F',
       'assignment': 'Assignment',
       'courseAssignments': 'Course Assignments',
+      'personalInformation': 'Personal Information',
+      'phoneNumber': 'Phone Number',
+      'address': 'Address',
+      'dateOfBirth': 'Date of Birth',
+      'studentId': 'Student ID',
+      'defaultUserName': 'User',
+      'viewProfile': 'View Profile',
+      'defaultUserEmail': 'user@example.com',
+      'defaultUserAddress': 'User Address',
       'courseQuizzes': 'Course Quizzes',
       'courseExams': 'Course Exams',
       'courseProjects': 'Course Projects',
