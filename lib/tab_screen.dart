@@ -4,6 +4,7 @@ import 'courses_screen.dart';
 import 'assignments_screen.dart';
 import 'grades_screen.dart';
 import 'resources_screen.dart';
+import 'quizzes_screen.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -18,7 +19,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -51,6 +52,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
           indicatorColor: const Color(0xFFB23A3A),
           tabs: [
             Tab(text: locale.myCourses),
+            Tab(text: locale.courseQuizzes),
             Tab(text: locale.assignments),
             Tab(text: locale.grades),
             Tab(text: locale.resources),
@@ -61,6 +63,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
         controller: _tabController,
         children: const [
           CoursesScreen(),
+          QuizzesScreen(),
           AssignmentsScreen(),
           GradesScreen(),
           ResourcesScreen(),

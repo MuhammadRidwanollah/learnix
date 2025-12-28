@@ -180,6 +180,7 @@ class AppLocalizations {
   String get assignment => t('assignment');
   String get courseAssignments => t('courseAssignments');
   String get courseQuizzes => t('courseQuizzes');
+  String get quizzesAvailable => t('quizzesAvailable');
   String get courseExams => t('courseExams');
   String get courseProjects => t('courseProjects');
   String get courseActivities => t('courseActivities');
@@ -201,6 +202,7 @@ class AppLocalizations {
   String get courseOther => t('courseOther');
   String get event => t('event');
   String get ofOverallGrade => t('ofOverallGrade');
+  String get question => t('question');
   String get markAsRead => t('markAsRead');
   String get takeAction => t('takeAction');
   String get relatedNotifications => t('relatedNotifications');
@@ -216,6 +218,7 @@ class AppLocalizations {
   String get courseUpdate => t('courseUpdate');
   String get newMaterialsAdded => t('newMaterialsAdded');
   String get gradePosted => t('gradePosted');
+  String get gradePostedNotification => t('gradePostedNotification');
   String get midtermGradeAvailable => t('midtermGradeAvailable');
   String get flutterDevelopment => t('flutterDevelopment');
   String get webDevelopment => t('webDevelopment');
@@ -267,7 +270,6 @@ class AppLocalizations {
   String get assignmentDueSoon => t('assignmentDueSoon');
   String get upcomingEvent => t('upcomingEvent');
   String get courseUpdateNotification => t('courseUpdateNotification');
-  String get gradePostedNotification => t('gradePostedNotification');
   String get newCourseAvailableDescription => t('newCourseAvailableDescription');
   String get assignmentDueSoonDescription => t('assignmentDueSoonDescription');
   String get upcomingEventDescription => t('upcomingEventDescription');
@@ -291,6 +293,8 @@ class AppLocalizations {
   String get assignmentGuide => t('assignmentGuide');
   String get downloads => t('downloads');
   String get viewProfile => t('viewProfile');
+  String get englishLanguage => t('englishLanguage');
+  String get indonesianLanguage => t('indonesianLanguage');
   String get personalInformation => t('personalInformation');
   String get phoneNumber => t('phoneNumber');
   String get address => t('address');
@@ -441,6 +445,7 @@ class AppLocalizations {
       'assignment': 'Tugas',
       'courseAssignments': 'Tugas Kursus',
       'courseQuizzes': 'Kuis Kursus',
+      'quizzesAvailable': 'Kuis Tersedia',
       'courseExams': 'Ujian Kursus',
       'courseProjects': 'Proyek Kursus',
       'courseActivities': 'Aktivitas Kursus',
@@ -462,6 +467,7 @@ class AppLocalizations {
       'courseOther': 'Lainnya',
       'event': 'Acara',
       'ofOverallGrade': 'dari Nilai Keseluruhan',
+      'question': 'Pertanyaan',
       'markAsRead': 'Tandai Sudah Dibaca',
       'takeAction': 'Ambil Tindakan',
       'relatedNotifications': 'Notifikasi Terkait',
@@ -477,6 +483,7 @@ class AppLocalizations {
       'courseUpdate': 'Pembaruan Kursus',
       'newMaterialsAdded': 'Materi baru ditambahkan ke CS101',
       'gradePosted': 'Nilai Diposting',
+      'gradePostedNotification': 'Notifikasi Nilai Diposting',
       'midtermGradeAvailable': 'Nilai ujian tengah semester Anda tersedia',
       'flutterDevelopment': 'Pengembangan Flutter',
       'webDevelopment': 'Pengembangan Web',
@@ -528,7 +535,6 @@ class AppLocalizations {
       'assignmentDueSoon': 'Tugas Jatuh Tempo Segera',
       'upcomingEvent': 'Acara Mendatang',
       'courseUpdateNotification': 'Pembaruan Kursus',
-      'gradePostedNotification': 'Nilai Diposting',
       'newCourseAvailableDescription': 'Sebuah kursus baru telah ditambahkan ke jalur pembelajaran Anda. Lihat kursus Pengembangan Flutter terbaru dengan materi komprehensif dan latihan praktis.',
       'assignmentDueSoonDescription': 'Tugas Anda untuk Ilmu Komputer 101 jatuh tempo besok. Harap kirimkan pekerjaan Anda sebelum batas waktu untuk menghindari sanksi.',
       'upcomingEventDescription': 'Ikuti webinar kami tentang Pengembangan Mobile hari Jumat ini pukul 14.00. Pelajari tren terbaru dan praktik terbaik dari para ahli industri.',
@@ -571,6 +577,8 @@ class AppLocalizations {
       'studentId': 'ID Mahasiswa',
       'defaultUserName': 'Pengguna',
       'viewProfile': 'Lihat Profil',
+      'englishLanguage': 'Bahasa Inggris',
+      'indonesianLanguage': 'Bahasa Indonesia',
       'defaultUserEmail': 'email@contoh.com',
       'defaultUserAddress': 'Alamat Pengguna'
     },
@@ -586,6 +594,9 @@ class AppLocalizations {
       'searchCourses': 'Search courses...',
       'noCoursesFound': 'No courses found',
       'seeAll': 'See All',
+      'all': 'All',
+      'pending': 'Pending',
+      'completed': 'Completed',
       'welcomeBack': 'Welcome Back',
       'signIn': 'Sign In',
       'logout': 'Logout',
@@ -714,9 +725,12 @@ class AppLocalizations {
       'studentId': 'Student ID',
       'defaultUserName': 'User',
       'viewProfile': 'View Profile',
+      'englishLanguage': 'English',
+      'indonesianLanguage': 'Indonesian',
       'defaultUserEmail': 'user@example.com',
       'defaultUserAddress': 'User Address',
       'courseQuizzes': 'Course Quizzes',
+      'quizzesAvailable': 'Quizzes Available',
       'courseExams': 'Course Exams',
       'courseProjects': 'Course Projects',
       'courseActivities': 'Course Activities',
@@ -738,6 +752,7 @@ class AppLocalizations {
       'courseOther': 'Other',
       'event': 'Event',
       'ofOverallGrade': 'of Overall Grade',
+      'question': 'Question',
       'markAsRead': 'Mark as Read',
       'takeAction': 'Take Action',
       'relatedNotifications': 'Related Notifications',
@@ -753,6 +768,7 @@ class AppLocalizations {
       'courseUpdate': 'Course Update',
       'newMaterialsAdded': 'New materials added to CS101',
       'gradePosted': 'Grade Posted',
+      'gradePostedNotification': 'Grade Posted Notification',
       'midtermGradeAvailable': 'Your midterm grade is available',
       'flutterDevelopment': 'Flutter Development',
       'webDevelopment': 'Web Development',
@@ -804,7 +820,6 @@ class AppLocalizations {
       'assignmentDueSoon': 'Assignment Due Soon',
       'upcomingEvent': 'Upcoming Event',
       'courseUpdateNotification': 'Course Update',
-      'gradePostedNotification': 'Grade Posted',
       'newCourseAvailableDescription': 'A new course has been added to your learning path. Check out the latest Flutter Development course with comprehensive materials and practical exercises.',
       'assignmentDueSoonDescription': 'Your assignment for Computer Science 101 is due tomorrow. Please submit your work before the deadline to avoid penalties.',
       'upcomingEventDescription': 'Join our webinar on Mobile Development this Friday at 2 PM. Learn about the latest trends and best practices from industry experts.',
@@ -838,8 +853,7 @@ class AppLocalizations {
       'resourceDescription': 'Resource Description',
       'courseSyllabusPdf': 'Course Syllabus PDF',
       'lectureVideoIntroduction': 'Lecture Video Introduction',
-      'externalResourceLink': 'External Resource Link',
-      'pending': 'Pending'
+      'externalResourceLink': 'External Resource Link'
     },
   };
 }

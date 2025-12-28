@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'localization/app_localizations.dart';
 import 'course_detail_screen.dart';
+import 'course_data.dart';
 
 class CoursesScreen extends StatefulWidget {
   const CoursesScreen({super.key});
@@ -22,77 +23,12 @@ class _CoursesScreenState extends State<CoursesScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
-    // Data palsu untuk kursus-kursus
-    final List<Map<String, dynamic>> myCourses = [
-      {
-        'title': locale.flutterDevelopment,
-        'instructor': 'Dr. Anderson',
-        'icon': Icons.code,
-      },
-      {
-        'title': locale.webDevelopment,
-        'instructor': 'Prof. Johnson',
-        'icon': Icons.language,
-      },
-      {
-        'title': locale.uiUxDesign,
-        'instructor': 'Ms. Williams',
-        'icon': Icons.design_services,
-      },
-      {
-        'title': locale.dataScience,
-        'instructor': 'Dr. Brown',
-        'icon': Icons.analytics,
-      },
-      {
-        'title': locale.machineLearning,
-        'instructor': 'Prof. Davis',
-        'icon': Icons.psychology,
-      },
-      {
-        'title': locale.advancedFlutter,
-        'instructor': 'Dr. Miller',
-        'icon': Icons.code,
-      },
-      {
-        'title': locale.webSecurity,
-        'instructor': 'Prof. Wilson',
-        'icon': Icons.security,
-      },
-      {
-        'title': locale.cloudComputing,
-        'instructor': 'Dr. Taylor',
-        'icon': Icons.cloud,
-      },
-    ];
+    // Data kursus dari file course_data.dart
+    final List<Map<String, dynamic>> allCourses = CourseData.getMockCourses();
     
-    // Data untuk kursus rekomendasi
-    final List<Map<String, dynamic>> recommendedCourses = [
-      {
-        'title': locale.uiUxDesign,
-        'instructor': 'Ms. Williams',
-        'progress': 0.2,
-        'icon': Icons.design_services,
-      },
-      {
-        'title': locale.dataScience,
-        'instructor': 'Dr. Brown',
-        'progress': 0.5,
-        'icon': Icons.analytics,
-      },
-      {
-        'title': locale.cloudComputing,
-        'instructor': 'Dr. Taylor',
-        'progress': 0.1,
-        'icon': Icons.cloud,
-      },
-      {
-        'title': locale.machineLearning,
-        'instructor': 'Prof. Davis',
-        'progress': 0.7,
-        'icon': Icons.psychology,
-      },
-    ];
+    // Ambil data untuk kursus saya dan rekomendasi
+    final List<Map<String, dynamic>> myCourses = allCourses;
+    final List<Map<String, dynamic>> recommendedCourses = allCourses.take(4).toList();
     
     // Filter kursus berdasarkan query pencarian
     final List<Map<String, dynamic>> filteredMyCourses = _searchQuery.isEmpty || _searchQuery.trim() == ''
@@ -257,12 +193,24 @@ class _CoursesScreenState extends State<CoursesScreen> {
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(10),
+                                color: Colors.grey[200], // Placeholder color
                               ),
-                              child: Icon(
-                                (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school,
-                                color: const Color(0xFFB23A3A),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.asset(
+                                  course['image'] ?? 'assets/images/default_course.jpg',
+                                  fit: BoxFit.cover,
+                                  width: 50,
+                                  height: 50,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    // Jika gambar tidak ditemukan, tampilkan placeholder
+                                    return Icon(
+                                      Icons.book,
+                                      color: const Color(0xFFB23A3A),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                             title: Text(
@@ -278,12 +226,22 @@ class _CoursesScreenState extends State<CoursesScreen> {
                             onTap: () {
                               String courseTitle = (course['title'] != null) ? course['title'].toString() : 'Course';
                               String courseInstructor = (course['instructor'] != null) ? course['instructor'].toString() : 'Instructor';
+                              String courseDescription = (course['description'] != null) ? course['description'].toString() : locale.courseDescriptionPlaceholder;
+                              int totalLessons = (course['totalLessons'] != null) ? course['totalLessons'] : 10;
+                              int completedLessons = (course['completedLessons'] != null) ? course['completedLessons'] : 0;
+                              String courseLevel = (course['level'] != null) ? course['level'].toString() : locale.courseLevelIntermediate;
+                              double progress = (course['progress'] != null) ? course['progress'].toDouble() : 0.0;
+                              
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => CourseDetailScreen(
                                     courseTitle: courseTitle,
                                     courseInstructor: courseInstructor,
-                                    courseDescription: locale.courseDescriptionPlaceholder,
+                                    courseDescription: courseDescription,
+                                    progress: progress,
+                                    courseLevel: courseLevel,
+                                    totalLessons: totalLessons,
+                                    completedLessons: completedLessons,
                                   ),
                                 ),
                               );
@@ -335,8 +293,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
                   if (course['progress'] != null && course['progress'] is num) {
                     progress = course['progress'].toDouble();
                   }
-                  IconData icon = (course['icon'] != null && course['icon'] is IconData) ? course['icon'] : Icons.school;
-                  return _buildCourseCardWithIcon(title, instructor, progress, icon);
+                  String imageUrl = (course['image'] != null) ? course['image'].toString() : 'assets/images/default_course.jpg';
+                  return _buildCourseCardWithIcon(title, instructor, progress, imageUrl);
                 }),
               ),
             ),
@@ -371,7 +329,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
     );
   }
 
-  Widget _buildCourseCard(String title, String instructor, double progress) {
+  Widget _buildCourseCard(String title, String instructor, double progress, String imageUrl) {
     return Container(
       width: 200,
       margin: const EdgeInsets.only(right: 16),
@@ -393,16 +351,31 @@ class _CoursesScreenState extends State<CoursesScreen> {
           Container(
             height: 100,
             decoration: BoxDecoration(
-              color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
+              color: Colors.grey[200], // Placeholder color
             ),
-            child: const Icon(
-              Icons.school, // Default icon
-              size: 40,
-              color: Color(0xFFB23A3A),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 100,
+                errorBuilder: (context, error, stackTrace) {
+                  // Jika gambar tidak ditemukan, tampilkan placeholder
+                  return const Icon(
+                    Icons.book,
+                    size: 40,
+                    color: Color(0xFFB23A3A),
+                  );
+                },
+              ),
             ),
           ),
           Padding(
@@ -441,7 +414,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
     );
   }
 
-  Widget _buildCourseCardWithIcon(String title, String instructor, double progress, IconData icon) {
+  Widget _buildCourseCardWithIcon(String title, String instructor, double progress, String imageUrl) {
     return Container(
       width: 200,
       margin: const EdgeInsets.only(right: 16),
@@ -463,16 +436,31 @@ class _CoursesScreenState extends State<CoursesScreen> {
           Container(
             height: 100,
             decoration: BoxDecoration(
-              color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
+              color: Colors.grey[200], // Placeholder color
             ),
-            child: Icon(
-              icon,
-              size: 40,
-              color: const Color(0xFFB23A3A),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 100,
+                errorBuilder: (context, error, stackTrace) {
+                  // Jika gambar tidak ditemukan, tampilkan placeholder
+                  return const Icon(
+                    Icons.book,
+                    size: 40,
+                    color: Color(0xFFB23A3A),
+                  );
+                },
+              ),
             ),
           ),
           Padding(

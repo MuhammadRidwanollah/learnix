@@ -9,6 +9,8 @@ import 'home_screen.dart';
 import 'tab_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
+import 'quiz_screen.dart';
+import 'quizzes_screen.dart';
 import 'providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -60,6 +62,20 @@ class MyApp extends StatelessWidget {
             '/register': (context) => _buildClearUserPage(const RegisterPage()),
             '/splash': (context) => const SplashScreen(),
             '/notifications': (context) => const NotificationsScreen(),
+          },
+          onGenerateRoute: (settings) {
+            if (settings.name == '/quiz') {
+              final args = settings.arguments;
+              if (args is Map<String, String>) {
+                return MaterialPageRoute(
+                  builder: (context) => QuizScreen(
+                    courseName: args['courseName'] ?? 'Course',
+                    courseInstructor: args['courseInstructor'],
+                  ),
+                );
+              }
+            }
+            return null;
           },
         );
       },

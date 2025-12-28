@@ -216,17 +216,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog(
       context: context,
       builder: (context) {
+        final locale = AppLocalizations.of(context);
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context).language),
+              title: Text(locale.language),
               content: SizedBox(
                 width: double.maxFinite,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     _buildDialogLanguageOption(
-                      title: 'English',
+                      title: locale.englishLanguage,
                       value: 'en',
                       currentValue: selectedLanguage,
                       onChanged: (value) {
@@ -237,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     const SizedBox(height: 8),
                     _buildDialogLanguageOption(
-                      title: 'Bahasa Indonesia',
+                      title: locale.indonesianLanguage,
                       value: 'id',
                       currentValue: selectedLanguage,
                       onChanged: (value) {
