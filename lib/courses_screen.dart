@@ -67,7 +67,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.1),
+                      color: Colors.grey.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 8,
                       offset: const Offset(0, 2),
@@ -181,7 +181,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                             borderRadius: BorderRadius.circular(12),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withValues(alpha: 0.1),
+                                color: Colors.grey.withOpacity(0.1),
                                 spreadRadius: 1,
                                 blurRadius: 8,
                                 offset: const Offset(0, 2),
@@ -232,6 +232,8 @@ class _CoursesScreenState extends State<CoursesScreen> {
                               String courseLevel = (course['level'] != null) ? course['level'].toString() : locale.courseLevelIntermediate;
                               double progress = (course['progress'] != null) ? course['progress'].toDouble() : 0.0;
                               
+                              String courseImage = (course['image'] != null) ? course['image'].toString() : 'assets/images/default_course.jpg';
+                              
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => CourseDetailScreen(
@@ -242,6 +244,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                                     courseLevel: courseLevel,
                                     totalLessons: totalLessons,
                                     completedLessons: completedLessons,
+                                    courseImage: courseImage,
                                   ),
                                 ),
                               );
@@ -338,7 +341,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 8,
             offset: const Offset(0, 2),
@@ -423,7 +426,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 8,
             offset: const Offset(0, 2),

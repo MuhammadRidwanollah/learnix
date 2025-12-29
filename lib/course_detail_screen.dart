@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'localization/app_localizations.dart';
+import 'course_data.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   final String courseTitle;
@@ -9,6 +10,7 @@ class CourseDetailScreen extends StatelessWidget {
   final String? courseLevel;
   final int? totalLessons;
   final int? completedLessons;
+  final String? courseImage;
 
   const CourseDetailScreen({
     super.key,
@@ -19,6 +21,7 @@ class CourseDetailScreen extends StatelessWidget {
     this.courseLevel,
     this.totalLessons,
     this.completedLessons,
+    this.courseImage,
   });
 
   @override
@@ -51,13 +54,12 @@ class CourseDetailScreen extends StatelessWidget {
             // Course Info Card
             Container(
               margin: const EdgeInsets.all(16.0),
-              padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -67,72 +69,87 @@ class CourseDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12),
+                  // Course Image
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12),
+                    ),
+                    child: Image.asset(
+                      courseImage ?? 'assets/images/default_course.jpg',
+                      height: 150,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Jika gambar tidak ditemukan, tampilkan placeholder
+                        return Container(
+                          height: 150,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFB23A3A).withOpacity(0.1),
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: Radius.circular(12),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.book,
+                            size: 60,
+                            color: Color(0xFFB23A3A),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          courseTitle,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        child: const Icon(
-                          Icons.school,
-                          color: Color(0xFFB23A3A),
-                          size: 30,
+                        const SizedBox(height: 8),
+                        Text(
+                          courseInstructor ?? locale.courseInstructorPlaceholder,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        const SizedBox(height: 12),
+                        Text(
+                          courseDescription ?? locale.courseDescriptionPlaceholder,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
                           children: [
-                            Text(
-                              courseTitle,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: _buildCourseInfoItem(
+                                Icons.access_time,
+                                courseLevel ?? locale.courseLevelIntermediate,
+                                locale.courseLevel,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              courseInstructor ?? locale.courseInstructorPlaceholder,
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
+                            Expanded(
+                              child: _buildCourseInfoItem(
+                                Icons.list,
+                                '${completedLessons ?? 5}/${totalLessons ?? 10} ${locale.lessons}',
+                                locale.courseContent,
                               ),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    courseDescription ?? locale.courseDescriptionPlaceholder,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
+                      ],
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildCourseInfoItem(
-                          Icons.access_time,
-                          courseLevel ?? locale.courseLevelIntermediate,
-                          locale.courseLevel,
-                        ),
-                      ),
-                      Expanded(
-                        child: _buildCourseInfoItem(
-                          Icons.list,
-                          '${completedLessons ?? 5}/${totalLessons ?? 10} ${locale.lessons}',
-                          locale.courseContent,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
@@ -147,7 +164,7 @@ class CourseDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -167,7 +184,7 @@ class CourseDetailScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   LinearProgressIndicator(
                     value: progress ?? 0.5,
-                    backgroundColor: Colors.grey.withValues(alpha: 0.2),
+                    backgroundColor: Colors.grey.withOpacity(0.2),
                     valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB23A3A)),
                   ),
                   const SizedBox(height: 8),
@@ -203,7 +220,7 @@ class CourseDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -295,6 +312,7 @@ class CourseDetailScreen extends StatelessWidget {
                           arguments: {
                             'courseName': courseTitle,
                             'courseInstructor': courseInstructor,
+                            'courseImage': courseImage,
                           },
                         );
                       },
@@ -361,7 +379,7 @@ class CourseDetailScreen extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isCompleted ? const Color(0xFFB23A3A).withValues(alpha: 0.05) : Colors.grey.withValues(alpha: 0.05),
+        color: isCompleted ? const Color(0xFFB23A3A).withOpacity(0.05) : Colors.grey.withOpacity(0.05),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

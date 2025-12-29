@@ -53,7 +53,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -69,7 +69,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+                          color: const Color(0xFFB23A3A).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(
@@ -135,7 +135,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -173,7 +173,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -204,7 +204,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                     height: 50,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.grey.withValues(alpha: 0.3),
+                        color: Colors.grey.withOpacity(0.3),
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),

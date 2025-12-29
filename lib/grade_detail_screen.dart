@@ -53,7 +53,7 @@ class GradeDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -77,7 +77,7 @@ class GradeDetailScreen extends StatelessWidget {
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+                          color: const Color(0xFFB23A3A).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(40),
                         ),
                         child: Center(
@@ -126,7 +126,7 @@ class GradeDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -160,7 +160,7 @@ class GradeDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -256,7 +256,7 @@ class GradeDetailScreen extends StatelessWidget {
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: score / 100,
-            backgroundColor: Colors.grey.withValues(alpha: 0.2),
+            backgroundColor: Colors.grey.withOpacity(0.2),
             valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB23A3A)),
           ),
           const SizedBox(height: 4),

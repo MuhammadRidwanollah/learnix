@@ -71,6 +71,7 @@ class MyApp extends StatelessWidget {
                   builder: (context) => QuizScreen(
                     courseName: args['courseName'] ?? 'Course',
                     courseInstructor: args['courseInstructor'],
+                    courseImage: args['courseImage'],
                   ),
                 );
               }

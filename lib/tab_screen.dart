@@ -5,6 +5,7 @@ import 'assignments_screen.dart';
 import 'grades_screen.dart';
 import 'resources_screen.dart';
 import 'quizzes_screen.dart';
+import 'course_data.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});

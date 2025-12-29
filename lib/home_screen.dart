@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
 import 'notifications_screen.dart';
 import 'providers/user_provider.dart';
+import 'course_data.dart';
+import 'course_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,54 +15,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _searchQuery = '';
+  late List<Map<String, dynamic>> _allCourses;
+  
+  @override
+  void initState() {
+    super.initState();
+    _allCourses = CourseData.getMockCourses();
+  }
   
   @override
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     final userProvider = Provider.of<UserProvider>(context);
     
-    // Data palsu untuk kursus-kursus
-    final List<Map<String, String>> allCourses = [
-      {
-        'title': locale.flutterDevelopment,
-        'instructor': 'Dr. Anderson',
-      },
-      {
-        'title': locale.webDevelopment,
-        'instructor': 'Prof. Johnson',
-      },
-      {
-        'title': locale.uiUxDesign,
-        'instructor': 'Ms. Williams',
-      },
-      {
-        'title': locale.dataScience,
-        'instructor': 'Dr. Smith',
-      },
-      {
-        'title': locale.machineLearning,
-        'instructor': 'Prof. Davis',
-      },
-      {
-        'title': locale.advancedFlutter,
-        'instructor': 'Dr. Anderson',
-      },
-      {
-        'title': locale.webSecurity,
-        'instructor': 'Prof. Johnson',
-      },
-      {
-        'title': locale.cloudComputing,
-        'instructor': 'Ms. Williams',
-      },
-    ];
-    
     // Filter kursus berdasarkan query pencarian
-    final List<Map<String, String>> filteredCourses = _searchQuery.isEmpty
-        ? allCourses
-        : allCourses.where((course) {
-            final title = course['title']?.toLowerCase() ?? '';
-            final instructor = course['instructor']?.toLowerCase() ?? '';
+    final List<Map<String, dynamic>> filteredCourses = _searchQuery.isEmpty
+        ? _allCourses
+        : _allCourses.where((course) {
+            final title = course['title']?.toString().toLowerCase() ?? '';
+            final instructor = course['instructor']?.toString().toLowerCase() ?? '';
             final query = _searchQuery.toLowerCase();
             return title.contains(query) || instructor.contains(query);
           }).toList();
@@ -132,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
+                    color: Colors.white.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: TextField(
@@ -210,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withValues(alpha: 0.1),
+                              color: Colors.grey.withOpacity(0.1),
                               spreadRadius: 1,
                               blurRadius: 8,
                               offset: const Offset(0, 2),
@@ -222,12 +195,24 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: 50,
                             height: 50,
                             decoration: BoxDecoration(
-                              color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey[200], // Placeholder color
                             ),
-                            child: const Icon(
-                              Icons.school,
-                              color: Color(0xFFB23A3A),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                course['image'] ?? 'assets/images/default_course.jpg',
+                                fit: BoxFit.cover,
+                                width: 50,
+                                height: 50,
+                                errorBuilder: (context, error, stackTrace) {
+                                  // Jika gambar tidak ditemukan, tampilkan placeholder
+                                  return const Icon(
+                                    Icons.school,
+                                    color: Color(0xFFB23A3A),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           title: Text(
@@ -240,6 +225,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             size: 16,
                             color: Colors.grey,
                           ),
+                          onTap: () {
+                            // Navigasi ke detail kursus
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => CourseDetailScreen(
+                                  courseTitle: (course['title'] != null) ? course['title'].toString() : 'Course',
+                                  courseInstructor: (course['instructor'] != null) ? course['instructor'].toString() : 'Instructor',
+                                  courseDescription: (course['description'] != null) ? course['description'].toString() : locale.courseDescriptionPlaceholder,
+                                  progress: (course['progress'] != null) ? course['progress'].toDouble() : 0.0,
+                                  courseLevel: (course['level'] != null) ? course['level'].toString() : locale.courseLevelIntermediate,
+                                  totalLessons: (course['totalLessons'] != null) ? course['totalLessons'] : 10,
+                                  completedLessons: (course['completedLessons'] != null) ? course['completedLessons'] : 0,
+                                  courseImage: (course['image'] != null) ? course['image'].toString() : 'assets/images/default_course.jpg',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
@@ -259,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 8,
             offset: const Offset(0, 2),

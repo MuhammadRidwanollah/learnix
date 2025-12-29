@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'localization/app_localizations.dart';
 import 'assignment_detail_screen.dart';
+import 'assignment_data.dart';
 
 class AssignmentsScreen extends StatefulWidget {
   const AssignmentsScreen({super.key});
@@ -14,58 +15,8 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context);
     
-    // Data palsu untuk tugas
-    final List<Map<String, String>> assignments = [
-      {
-        'title': locale.assignmentDescription,
-        'course': locale.computerScience101,
-        'dueDate': '2023-12-15',
-        'status': 'pending',
-        'description': locale.assignmentDescriptionPlaceholder,
-      },
-      {
-        'title': locale.assignment,
-        'course': locale.flutterDevelopment,
-        'dueDate': '2023-12-10',
-        'status': 'completed',
-        'description': locale.assignmentDescription,
-      },
-      {
-        'title': locale.assignment,
-        'course': locale.webDevelopment,
-        'dueDate': '2024-01-05',
-        'status': 'pending',
-        'description': locale.assignmentDescription,
-      },
-      {
-        'title': locale.assignment,
-        'course': locale.uiUxDesign,
-        'dueDate': '2023-12-20',
-        'status': 'completed',
-        'description': locale.assignmentDescription,
-      },
-      {
-        'title': locale.assignment,
-        'course': locale.dataScience,
-        'dueDate': '2024-01-15',
-        'status': 'inProgress',
-        'description': locale.assignmentDescription,
-      },
-      {
-        'title': locale.assignment,
-        'course': locale.machineLearning,
-        'dueDate': '2023-12-25',
-        'status': 'pending',
-        'description': locale.assignmentDescription,
-      },
-      {
-        'title': locale.assignment,
-        'course': locale.advancedFlutter,
-        'dueDate': '2024-01-10',
-        'status': 'inProgress',
-        'description': locale.assignmentDescription,
-      },
-    ];
+    // Data assignment dari assignment_data.dart
+    final List<Map<String, dynamic>> assignments = AssignmentData.getMockAssignments();
     
     // Hitung jumlah tugas berdasarkan status
     int allCount = assignments.length;
@@ -120,7 +71,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withValues(alpha: 0.1),
+                          color: Colors.grey.withOpacity(0.1),
                           spreadRadius: 1,
                           blurRadius: 8,
                           offset: const Offset(0, 2),
@@ -132,12 +83,24 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey[200], // Placeholder color
                         ),
-                        child: const Icon(
-                          Icons.assignment,
-                          color: Color(0xFFB23A3A),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            assignment['image'] ?? 'assets/images/default_assignment.jpg',
+                            fit: BoxFit.cover,
+                            width: 50,
+                            height: 50,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Jika gambar tidak ditemukan, tampilkan placeholder
+                              return const Icon(
+                                Icons.assignment,
+                                color: Color(0xFFB23A3A),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       title: Text(
@@ -205,7 +168,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 8,
             offset: const Offset(0, 2),

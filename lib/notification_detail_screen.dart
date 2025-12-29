@@ -51,7 +51,7 @@ class NotificationDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -67,7 +67,7 @@ class NotificationDetailScreen extends StatelessWidget {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+                          color: const Color(0xFFB23A3A).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: const Icon(
@@ -122,7 +122,7 @@ class NotificationDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -200,7 +200,7 @@ class NotificationDetailScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 8,
                     offset: const Offset(0, 2),
@@ -247,7 +247,7 @@ class NotificationDetailScreen extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey.withValues(alpha: 0.05),
+        color: Colors.grey.withOpacity(0.05),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -256,7 +256,7 @@ class NotificationDetailScreen extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+              color: const Color(0xFFB23A3A).withOpacity(0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(

@@ -4,11 +4,13 @@ import 'localization/app_localizations.dart';
 class QuizScreen extends StatefulWidget {
   final String courseName;
   final String? courseInstructor;
+  final String? courseImage;
 
   const QuizScreen({
     super.key,
     required this.courseName,
     this.courseInstructor,
+    this.courseImage,
   });
 
   @override
@@ -148,12 +150,42 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(
-          '${locale.courseQuizzes} - ${widget.courseName}',
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          children: [
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey[200], // Placeholder color
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  widget.courseImage ?? 'assets/images/default_quiz.jpg',
+                  fit: BoxFit.cover,
+                  width: 30,
+                  height: 30,
+                  errorBuilder: (context, error, stackTrace) {
+                    // Jika gambar tidak ditemukan, tampilkan placeholder
+                    return const Icon(
+                      Icons.quiz,
+                      color: Color(0xFFB23A3A),
+                      size: 20,
+                    );
+                  },
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '${locale.courseQuizzes} - ${widget.courseName}',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
         centerTitle: false,
         leading: IconButton(
@@ -199,7 +231,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.1),
+                      color: Colors.grey.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 8,
                       offset: const Offset(0, 2),
@@ -229,7 +261,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           
                           Color optionColor = Colors.grey[200]!;
                           if (isSelected) {
-                            optionColor = const Color(0xFFB23A3A).withValues(alpha: 0.2);
+                            optionColor = const Color(0xFFB23A3A).withOpacity(0.2);
                           }
                           
                           return Container(

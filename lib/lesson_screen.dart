@@ -106,7 +106,7 @@ class _LessonScreenState extends State<LessonScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.1),
+                      color: Colors.grey.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 8,
                       offset: const Offset(0, 2),
@@ -121,7 +121,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       width: double.infinity,
                       height: 200,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+                        color: const Color(0xFFB23A3A).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(
@@ -156,7 +156,7 @@ class _LessonScreenState extends State<LessonScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFB23A3A).withValues(alpha: 0.05),
+                        color: const Color(0xFFB23A3A).withOpacity(0.05),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
