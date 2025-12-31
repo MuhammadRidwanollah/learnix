@@ -154,14 +154,14 @@ class _CoursesScreenState extends State<CoursesScreen> {
                           Icon(
                             Icons.search_off,
                             size: 64,
-                            color: Colors.grey[400],
+                            color: Colors.grey.shade400,
                           ),
                           const SizedBox(height: 16),
                           Text(
                             locale.noCoursesFound,
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.grey[600],
+                              color: Colors.grey.shade600,
                             ),
                           ),
                         ],
@@ -194,7 +194,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                               height: 50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Colors.grey[200], // Placeholder color
+                                color: Colors.grey.shade200, // Placeholder color
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
@@ -358,7 +358,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
-              color: Colors.grey[200], // Placeholder color
+              color: Colors.grey.shade200, // Placeholder color
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
@@ -404,7 +404,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: Colors.grey[300],
+                  backgroundColor: Colors.grey.shade300,
                   valueColor: const AlwaysStoppedAnimation<Color>(
                     Color(0xFFB23A3A),
                   ),
@@ -443,7 +443,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 topLeft: Radius.circular(12),
                 topRight: Radius.circular(12),
               ),
-              color: Colors.grey[200], // Placeholder color
+              color: Colors.grey.shade200, // Placeholder color
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
@@ -489,7 +489,7 @@ class _CoursesScreenState extends State<CoursesScreen> {
                 const SizedBox(height: 8),
                 LinearProgressIndicator(
                   value: progress,
-                  backgroundColor: Colors.grey[300],
+                  backgroundColor: Colors.grey.shade300,
                   valueColor: const AlwaysStoppedAnimation<Color>(
                     Color(0xFFB23A3A),
                   ),

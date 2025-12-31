@@ -62,8 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  userProvider.firstName != null && userProvider.lastName != null
-                      ? '${userProvider.firstName} ${userProvider.lastName}'
+                  (userProvider.firstName != null && userProvider.firstName!.isNotEmpty) || (userProvider.lastName != null && userProvider.lastName!.isNotEmpty)
+                      ? '${userProvider.firstName ?? ''} ${userProvider.lastName ?? ''}'.trim()
                       : userProvider.name ?? 'User',
                   style: const TextStyle(
                     fontSize: 20,

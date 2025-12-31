@@ -22,13 +22,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize with current user data
-    final userProvider = context.read<UserProvider>();
-    _firstName = userProvider.firstName ?? '';
-    _lastName = userProvider.lastName ?? '';
-    _email = userProvider.email ?? '';
-    _country = userProvider.country ?? '';
-    _description = userProvider.description ?? '';
+    // Initialize with current user data after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userProvider = context.read<UserProvider>();
+      setState(() {
+        _firstName = userProvider.firstName ?? '';
+        _lastName = userProvider.lastName ?? '';
+        _email = userProvider.email ?? '';
+        _country = userProvider.country ?? '';
+        _description = userProvider.description ?? '';
+      });
+    });
   }
 
   @override

@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: (settings) {
             if (settings.name == '/quiz') {
               final args = settings.arguments;
-              if (args is Map<String, String>) {
+              if (args is Map<String, dynamic>) {
                 return MaterialPageRoute(
                   builder: (context) => QuizScreen(
                     courseName: args['courseName'] ?? 'Course',

@@ -158,14 +158,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icon(
                           Icons.search_off,
                           size: 64,
-                          color: Colors.grey[400],
+                          color: Colors.grey.shade400,
                         ),
                         const SizedBox(height: 16),
                         Text(
                           locale.noCoursesFound,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Colors.grey[600],
+                            color: Colors.grey.shade600,
                           ),
                         ),
                       ],
@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 50,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey[200], // Placeholder color
+                              color: Colors.grey.shade200, // Placeholder color
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),

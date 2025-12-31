@@ -211,7 +211,7 @@ class GradeDetailScreen extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Colors.grey.shade600,
           ),
         ),
         const SizedBox(width: 8),
@@ -264,7 +264,7 @@ class GradeDetailScreen extends StatelessWidget {
             '${(weight * 100).toInt()}% ${locale.ofOverallGrade}',
             style: TextStyle(
               fontSize: 12,
-              color: Colors.grey[600],
+              color: Colors.grey.shade600,
             ),
           ),
         ],
@@ -297,7 +297,7 @@ class GradeDetailScreen extends StatelessWidget {
                 description,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[600],
+                  color: Colors.grey.shade600,
                 ),
               ),
             ],

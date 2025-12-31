@@ -95,7 +95,7 @@ class ResourceDetailScreen extends StatelessWidget {
                               resourceType ?? locale.pdfDocument,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey[600],
+                                color: Colors.grey.shade600,
                               ),
                             ),
                           ],
@@ -157,7 +157,7 @@ class ResourceDetailScreen extends StatelessWidget {
                     description ?? locale.resourceDescriptionPlaceholder,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey[600],
+                      color: Colors.grey.shade600,
                     ),
                   ),
                 ],
@@ -338,7 +338,7 @@ class ResourceDetailScreen extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Colors.grey.shade600,
           ),
         ),
       ],
@@ -384,7 +384,7 @@ class ResourceDetailScreen extends StatelessWidget {
                   '$type • $size',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey[600],
+                    color: Colors.grey.shade600,
                   ),
                 ),
               ],

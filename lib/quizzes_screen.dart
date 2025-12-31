@@ -92,7 +92,7 @@ class _QuizzesScreenState extends State<QuizzesScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey[200], // Placeholder color
+                          color: Colors.grey.shade200, // Placeholder color
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),

@@ -194,7 +194,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
       label: Text(
         label,
         style: TextStyle(
-          color: isSelected ? Colors.white : Colors.grey[700],
+          color: isSelected ? Colors.white : Colors.grey.shade700,
         ),
       ),
       selected: isSelected,

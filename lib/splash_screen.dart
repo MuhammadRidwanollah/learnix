@@ -14,24 +14,27 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      // Check if user is logged in (in a real app, you'd check actual auth state)
-      bool isLoggedIn = _checkLoginStatus(); // Fungsi untuk mengecek status login
-      
-      // Using mounted to avoid the async context warning
-      if (mounted) {
-        if (isLoggedIn) {
-          // Navigate to main app if logged in
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const MyAppShell()),
-          );
-        } else {
-          // Navigate to login page if not logged in
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const LoginPage()),
-          );
+    // Use WidgetsBinding to run after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        // Check if user is logged in (in a real app, you'd check actual auth state)
+        bool isLoggedIn = _checkLoginStatus(); // Fungsi untuk mengecek status login
+        
+        // Using mounted to avoid the async context warning
+        if (mounted) {
+          if (isLoggedIn) {
+            // Navigate to main app if logged in
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const MyAppShell()),
+            );
+          } else {
+            // Navigate to login page if not logged in
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+          }
         }
-      }
+      });
     });
   }
 

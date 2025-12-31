@@ -118,7 +118,7 @@ class CourseDetailScreen extends StatelessWidget {
                           courseInstructor ?? locale.courseInstructorPlaceholder,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[600],
+                            color: Colors.grey.shade600,
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -126,7 +126,7 @@ class CourseDetailScreen extends StatelessWidget {
                           courseDescription ?? locale.courseDescriptionPlaceholder,
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[600],
+                            color: Colors.grey.shade600,
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -323,7 +323,7 @@ class CourseDetailScreen extends StatelessWidget {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[600],
+                        backgroundColor: Colors.grey.shade600,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -373,7 +373,7 @@ class CourseDetailScreen extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Colors.grey.shade600,
           ),
         ),
       ],
@@ -412,7 +412,7 @@ class CourseDetailScreen extends StatelessWidget {
                   description,
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey[600],
+                    color: Colors.grey.shade600,
                   ),
                 ),
               ],
@@ -421,7 +421,7 @@ class CourseDetailScreen extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios,
             size: 16,
-            color: Colors.grey[400],
+            color: Colors.grey.shade400,
           ),
         ],
       ),

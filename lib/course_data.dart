@@ -83,6 +83,86 @@ class CourseData {
         'completedLessons': 5,
         'image': 'assets/images/cloud_course.jpg', // Placeholder image path
       },
+      {
+        'title': 'Mobile App Development',
+        'instructor': 'Dr. Taylor',
+        'description': 'Build native mobile applications for iOS and Android',
+        'level': 'Intermediate',
+        'progress': 0.3,
+        'totalLessons': 16,
+        'completedLessons': 5,
+        'image': 'assets/images/mobile_app_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Game Development',
+        'instructor': 'Prof. Wilson',
+        'description': 'Create interactive games using Unity and C#',
+        'level': 'Intermediate',
+        'progress': 0.6,
+        'totalLessons': 18,
+        'completedLessons': 11,
+        'image': 'assets/images/game_dev_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Artificial Intelligence',
+        'instructor': 'Dr. Martinez',
+        'description': 'Explore AI concepts and implement intelligent systems',
+        'level': 'Advanced',
+        'progress': 0.2,
+        'totalLessons': 20,
+        'completedLessons': 4,
+        'image': 'assets/images/ai_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Database Management',
+        'instructor': 'Prof. Garcia',
+        'description': 'Design and manage relational and NoSQL databases',
+        'level': 'Intermediate',
+        'progress': 0.8,
+        'totalLessons': 14,
+        'completedLessons': 11,
+        'image': 'assets/images/database_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Cybersecurity',
+        'instructor': 'Dr. Lee',
+        'description': 'Protect systems and networks from digital attacks',
+        'level': 'Advanced',
+        'progress': 0.4,
+        'totalLessons': 16,
+        'completedLessons': 6,
+        'image': 'assets/images/cybersecurity_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'DevOps Engineering',
+        'instructor': 'Prof. Clark',
+        'description': 'Implement CI/CD pipelines and infrastructure as code',
+        'level': 'Advanced',
+        'progress': 0.1,
+        'totalLessons': 12,
+        'completedLessons': 1,
+        'image': 'assets/images/devops_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Blockchain Technology',
+        'instructor': 'Dr. Rodriguez',
+        'description': 'Understand blockchain concepts and smart contract development',
+        'level': 'Advanced',
+        'progress': 0.3,
+        'totalLessons': 14,
+        'completedLessons': 4,
+        'image': 'assets/images/blockchain_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Digital Marketing',
+        'instructor': 'Prof. Lewis',
+        'description': 'Strategies for online marketing and customer engagement',
+        'level': 'Beginner',
+        'progress': 0.7,
+        'totalLessons': 10,
+        'completedLessons': 7,
+        'image': 'assets/images/digital_marketing_course.jpg', // Placeholder image path
+      },
     ];
   }
 

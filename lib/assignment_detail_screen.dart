@@ -95,7 +95,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                               courseName ?? locale.computerScience101,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey[600],
+                                color: Colors.grey.shade600,
                               ),
                             ),
                           ],
@@ -157,7 +157,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                     description ?? locale.assignmentDescriptionPlaceholder,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey[600],
+                      color: Colors.grey.shade600,
                     ),
                   ),
                 ],
@@ -195,7 +195,7 @@ class AssignmentDetailScreen extends StatelessWidget {
                     locale.fileSubmission,
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.grey[600],
+                      color: Colors.grey.shade600,
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -213,13 +213,13 @@ class AssignmentDetailScreen extends StatelessWidget {
                         const SizedBox(width: 12),
                         Icon(
                           Icons.attach_file,
-                          color: Colors.grey[600],
+                          color: Colors.grey.shade600,
                         ),
                         const SizedBox(width: 8),
                         Text(
                           locale.chooseFile,
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: Colors.grey.shade600,
                           ),
                         ),
                       ],
@@ -308,7 +308,7 @@ class AssignmentDetailScreen extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.grey[600],
+            color: Colors.grey.shade600,
           ),
         ),
       ],

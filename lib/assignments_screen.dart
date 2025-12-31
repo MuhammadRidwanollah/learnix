@@ -84,7 +84,7 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey[200], // Placeholder color
+                          color: Colors.grey.shade200, // Placeholder color
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
@@ -126,10 +126,10 @@ class _AssignmentsScreenState extends State<AssignmentsScreen> {
                                   : locale.pending,
                           style: TextStyle(
                             color: assignment['status'] == 'completed' 
-                                ? Colors.green[800] 
+                                ? Colors.green.shade700 
                                 : assignment['status'] == 'inProgress' 
-                                    ? Colors.blue[800] 
-                                    : Colors.orange[800],
+                                    ? Colors.blue.shade700 
+                                    : Colors.orange.shade700,
                             fontSize: 12,
                           ),
                         ),

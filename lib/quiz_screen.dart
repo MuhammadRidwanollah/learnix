@@ -157,7 +157,7 @@ class _QuizScreenState extends State<QuizScreen> {
               height: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.grey[200], // Placeholder color
+                color: Colors.grey.shade200, // Placeholder color
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
@@ -204,7 +204,7 @@ class _QuizScreenState extends State<QuizScreen> {
               margin: const EdgeInsets.only(bottom: 20),
               child: LinearProgressIndicator(
                 value: (_currentQuestionIndex + 1) / _quizData.length,
-                backgroundColor: Colors.grey[300],
+                backgroundColor: Colors.grey.shade300,
                 valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB23A3A)),
               ),
             ),
@@ -259,7 +259,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           bool isSelected = selectedAnswer == index;
                           bool isCorrect = questionData['correctAnswer'] == index;
                           
-                          Color optionColor = Colors.grey[200]!;
+                          Color optionColor = Colors.grey.shade200!;
                           if (isSelected) {
                             optionColor = const Color(0xFFB23A3A).withOpacity(0.2);
                           }
@@ -282,7 +282,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                         decoration: BoxDecoration(
                                           color: isSelected 
                                               ? const Color(0xFFB23A3A) 
-                                              : Colors.grey[300],
+                                              : Colors.grey.shade300,
                                           shape: BoxShape.circle,
                                         ),
                                         child: Center(
@@ -291,7 +291,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                             style: TextStyle(
                                               color: isSelected 
                                                   ? Colors.white 
-                                                  : Colors.grey[700],
+                                                  : Colors.grey.shade700,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -337,7 +337,7 @@ class _QuizScreenState extends State<QuizScreen> {
                     ElevatedButton(
                       onPressed: _previousQuestion,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: Colors.grey.shade300,
                         foregroundColor: Colors.black87,
                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       ),
