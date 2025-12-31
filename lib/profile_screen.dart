@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'localization/app_localizations.dart';
 import 'localization/language_provider.dart';
 import 'providers/user_provider.dart';
+import 'profile_detail_screen.dart';
+import 'profile_edit_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -60,7 +62,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  userProvider.name ?? 'User',
+                  userProvider.firstName != null && userProvider.lastName != null
+                      ? '${userProvider.firstName} ${userProvider.lastName}'
+                      : userProvider.name ?? 'User',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -80,7 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
 
-
           // Profile Options
           Expanded(
             child: ListView(
@@ -91,7 +94,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Icons.person,
                   locale.viewProfile,
                   () {
-                    _showProfileDetailDialog(context, userProvider, locale);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileDetailScreen(),
+                      ),
+                    );
                   },
                 ),
                 const SizedBox(height: 12),
@@ -144,7 +151,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: Colors.grey.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 8,
             offset: const Offset(0, 2),
@@ -156,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: const Color(0xFFB23A3A).withValues(alpha: 0.1),
+            color: const Color(0xFFB23A3A).withOpacity(0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
@@ -276,51 +283,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             );
           },
-        );
-      },
-    );
-  }
-
-  void _showProfileDetailDialog(
-    BuildContext context,
-    UserProvider userProvider,
-    AppLocalizations locale,
-  ) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(locale.personalInformation),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildInfoRow(locale.name, userProvider.name ?? locale.defaultUserName),
-                const SizedBox(height: 8),
-                _buildInfoRow(locale.email, userProvider.email ?? locale.defaultUserEmail),
-                const SizedBox(height: 8),
-                _buildInfoRow(locale.phoneNumber, '+62 812-3456-7890'),
-                const SizedBox(height: 8),
-                _buildInfoRow(locale.address, locale.defaultUserAddress),
-                const SizedBox(height: 8),
-                _buildInfoRow(locale.dateOfBirth, '15 Juni 1995'),
-                const SizedBox(height: 8),
-                _buildInfoRow(locale.studentId, 'STU2023001'),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (context.mounted) {
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text(locale.ok),
-            ),
-          ],
         );
       },
     );

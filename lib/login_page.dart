@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.email,
-                        color: const Color(0xFFB23A3A).withValues(alpha: 0.5),
+                        color: const Color(0xFFB23A3A).withOpacity(0.5),
                       ),
                     ),
                   ),
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                       border: const OutlineInputBorder(),
                       prefixIcon: Icon(
                         Icons.lock,
-                        color: const Color(0xFFB23A3A).withValues(alpha: 0.5),
+                        color: const Color(0xFFB23A3A).withOpacity(0.5),
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(

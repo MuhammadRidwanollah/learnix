@@ -268,6 +268,12 @@ class CourseDetailScreen extends StatelessWidget {
                     false,
                     locale.courseMaterials,
                   ),
+                  _buildLessonItem(
+                    locale.pptGuidelines,
+                    Icons.slideshow,
+                    true,
+                    locale.assignmentGuidelinesPPT,
+                  ),
                 ],
               ),
             ),

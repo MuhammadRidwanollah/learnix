@@ -3,6 +3,10 @@ import 'package:flutter/foundation.dart';
 class User {
   final String name;
   final String email;
+  final String? firstName;
+  final String? lastName;
+  final String? country;
+  final String? description;
   final String? studentId;
   final String? program;
   final String? year;
@@ -13,6 +17,10 @@ class User {
   User({
     required this.name,
     required this.email,
+    this.firstName,
+    this.lastName,
+    this.country,
+    this.description,
     this.studentId,
     this.program,
     this.year,
@@ -25,6 +33,10 @@ class User {
   User copyWith({
     String? name,
     String? email,
+    String? firstName,
+    String? lastName,
+    String? country,
+    String? description,
     String? studentId,
     String? program,
     String? year,
@@ -35,6 +47,10 @@ class User {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      country: country ?? this.country,
+      description: description ?? this.description,
       studentId: studentId ?? this.studentId,
       program: program ?? this.program,
       year: year ?? this.year,
@@ -64,10 +80,35 @@ class UserProvider with ChangeNotifier {
 
   String? get name => _user?.name;
   String? get email => _user?.email;
+  String? get firstName => _user?.firstName;
+  String? get lastName => _user?.lastName;
+  String? get country => _user?.country;
+  String? get description => _user?.description;
   String? get studentId => _user?.studentId;
   String? get program => _user?.program;
   String? get year => _user?.year;
   int? get completedCourses => _user?.completedCourses;
   int? get enrolledCourses => _user?.enrolledCourses;
   double? get gpa => _user?.gpa;
+
+  void updateProfile({
+    String? name,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? country,
+    String? description,
+  }) {
+    if (_user != null) {
+      _user = _user!.copyWith(
+        name: name,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        country: country,
+        description: description,
+      );
+      notifyListeners();
+    }
+  }
 }

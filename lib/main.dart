@@ -9,6 +9,8 @@ import 'home_screen.dart';
 import 'tab_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
+import 'profile_detail_screen.dart';
+import 'profile_edit_screen.dart';
 import 'quiz_screen.dart';
 import 'quizzes_screen.dart';
 import 'providers/user_provider.dart';
