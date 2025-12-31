@@ -163,6 +163,66 @@ class CourseData {
         'completedLessons': 7,
         'image': 'assets/images/digital_marketing_course.jpg', // Placeholder image path
       },
+      {
+        'title': 'Computer Networks',
+        'instructor': 'Dr. Thompson',
+        'description': 'Understanding network protocols and infrastructure',
+        'level': 'Intermediate',
+        'progress': 0.5,
+        'totalLessons': 16,
+        'completedLessons': 8,
+        'image': 'assets/images/networks_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Software Engineering',
+        'instructor': 'Prof. Adams',
+        'description': 'Principles of software development and project management',
+        'level': 'Intermediate',
+        'progress': 0.9,
+        'totalLessons': 14,
+        'completedLessons': 13,
+        'image': 'assets/images/software_eng_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Operating Systems',
+        'instructor': 'Dr. Nelson',
+        'description': 'Study of operating system concepts and design',
+        'level': 'Advanced',
+        'progress': 0.3,
+        'totalLessons': 18,
+        'completedLessons': 5,
+        'image': 'assets/images/os_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Data Structures & Algorithms',
+        'instructor': 'Prof. Garcia',
+        'description': 'Essential data structures and algorithm design techniques',
+        'level': 'Intermediate',
+        'progress': 0.7,
+        'totalLessons': 20,
+        'completedLessons': 14,
+        'image': 'assets/images/dsa_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Web Design Fundamentals',
+        'instructor': 'Ms. Parker',
+        'description': 'Basic principles of web design and user experience',
+        'level': 'Beginner',
+        'progress': 0.6,
+        'totalLessons': 12,
+        'completedLessons': 7,
+        'image': 'assets/images/web_design_course.jpg', // Placeholder image path
+      },
+      {
+        'title': 'Business Analytics',
+        'instructor': 'Prof. Campbell',
+        'description': 'Using data analysis for business decision making',
+        'level': 'Intermediate',
+        'progress': 0.4,
+        'totalLessons': 14,
+        'completedLessons': 6,
+        'image': 'assets/images/analytics_course.jpg', // Placeholder image path
+      },
     ];
   }
 
